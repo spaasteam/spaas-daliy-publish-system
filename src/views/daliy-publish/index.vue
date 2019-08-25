@@ -181,7 +181,6 @@ export default {
 
           const { html_url } = await postDaliy2Issue(params);
 
-
           const questionData = {
             gitMessage,
             title,

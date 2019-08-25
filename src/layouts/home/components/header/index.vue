@@ -4,7 +4,7 @@
       <i class="menu-icon" :class="menuIcon" @click="toggleMenu"></i>
     </div>
     <div class="right-panel">
-      <el-dropdown>
+      <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
           <img class="user_avatar" :src="user.avatar_url" alt="avatar" />
           <span class="username">{{user.username}}</span>
@@ -16,7 +16,7 @@
           <el-dropdown-item>螺蛳粉</el-dropdown-item>
           <el-dropdown-item disabled>双皮奶</el-dropdown-item>-->
           <!-- <el-dropdown-item divided>蚵仔煎</el-dropdown-item> -->
-          <el-dropdown-item>退出</el-dropdown-item>
+          <el-dropdown-item command="logout">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -29,7 +29,7 @@ import { computed, value } from "vue-function-api";
 export default {
   name: "VHeader",
   setup(props, ctx) {
-    const { $store } = ctx.root;
+    const { $store, toast, $router } = ctx.root;
 
     const user = computed(() => {
       return $store.getters.user;
@@ -37,6 +37,21 @@ export default {
 
     const toggleMenu = () => {
       $store.commit("app/TOGGLE_SIDEBAR");
+    };
+
+    const logout = () => {
+      $store.dispatch("user/clearUserInfo");
+      localStorage.removeItem("access_token");
+      toast("退出登录成功");
+      $router.push("/logi");
+    };
+
+    const handleCommand = key => {
+      const fnMap = {
+        logout
+      };
+
+      fnMap[key] && fnMap[key]();
     };
 
     const menuIcon = computed(() => {
@@ -48,7 +63,8 @@ export default {
     return {
       user,
       menuIcon,
-      toggleMenu
+      toggleMenu,
+      handleCommand
     };
   }
 };

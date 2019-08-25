@@ -35,9 +35,9 @@ const actions = {
   },
   clearUserInfo({ commit }) {
     commit("update", {
-      token: "",
+      access_token: "",
       username: "",
-      email: ""
+      avatar_url: ""
     });
   }
 };
