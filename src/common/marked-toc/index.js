@@ -7,10 +7,10 @@
 
 'use strict';
 
-var marked = require('marked');
-var slugify = require('uslug');
-var _ = require('lodash');
-var utils = require('./lib/utils').default;
+import { any, union, extend } from "lodash";
+const marked = require('marked');
+const slugify = require('uslug');
+const utils = require('./lib/utils').default;
 
 /**
  * Default template to use for generating
@@ -31,7 +31,7 @@ const template = data => data2String.replace(/{(.*?)}/g, (_, key) =>  data[key])
  */
 
 function generate(str, options) {
-  var opts = _.extend({
+  var opts = extend({
     firsth1: false,
     blacklist: true,
     omit: [],
@@ -52,7 +52,7 @@ function generate(str, options) {
   }
 
   // Do any h1's still exist?
-  var h1 = _.any(tokens, {depth: 1});
+  var h1 = any(tokens, {depth: 1});
 
   tokens.filter(function (token) {
     // Filter out everything but headings
@@ -74,7 +74,7 @@ function generate(str, options) {
 
     // Omit headings with these strings
     var omissions = ['Table of Contents', 'TOC', 'TABLE OF CONTENTS'];
-    var omit = _.union([], opts.omit, omissions);
+    var omit = union([], opts.omit, omissions);
 
     if (utils.isMatch(omit, token.heading)) {
       return;
@@ -89,7 +89,7 @@ function generate(str, options) {
 
     var bullet = Array.isArray(opts.bullet) ? opts.bullet[(h.depth - 1) % opts.bullet.length] : opts.bullet;
 
-    var data = _.extend({}, opts.data, {
+    var data = extend({}, opts.data, {
       depth  : new Array((h.depth - 1) * 2 + 1).join(' '),
       bullet : bullet ? bullet : '* ',
       heading: h.heading,
