@@ -56,6 +56,7 @@ const writeSummaryFile = async ({ gitMessage, title, link, body }) => {
     content
   });
 
+
   return writeContent;
   // await updateGithubFile({
   //   path: summaryPath,

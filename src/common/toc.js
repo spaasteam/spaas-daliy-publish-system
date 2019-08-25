@@ -11,7 +11,7 @@ const toc = content => {
   var table = start + mdtoc(content) + stop;
 
   content = content.replace(start, table);
-
+  console.log(content);
   return content;
 };
 

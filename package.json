@@ -23,7 +23,6 @@
     "marked-toc": "^0.3.0",
     "mavon-editor": "^2.7.5",
     "netlify-lambda": "^1.6.3",
-    "template": "^0.17.5",
     "unlazy-loader": "^0.1.3",
     "uslug": "^1.0.4",
     "vue": "^2.6.10",

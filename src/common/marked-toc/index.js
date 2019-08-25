@@ -8,8 +8,6 @@
 'use strict';
 
 var marked = require('marked');
-// var matter = require('gray-matter');
-var template = require('template');
 var slugify = require('uslug');
 var _ = require('lodash');
 var utils = require('./lib/utils').default;
@@ -19,8 +17,9 @@ var utils = require('./lib/utils').default;
  * a table of contents.
  */
 
-var defaultTemplate = '<%= depth %><%= bullet %>[<%= heading %>](#<%= url %>)\n';
+const data2String = `{depth}{bullet}{heading}(#{url})\n`;
 
+const template = data => data2String.replace(/{(.*?)}/g, (_, key) =>  data[key])
 
 /**
  * Create the table of contents object that
@@ -98,10 +97,9 @@ function generate(str, options) {
     });
 
     tocArray.push(data);
-
-    var tmpl = opts.template || defaultTemplate;
-    toc += template(tmpl, data);
+    toc += template(data);
   });
+
 
   return {
     data: tocArray,
