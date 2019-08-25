@@ -1,29 +1,5 @@
-# client
+## 
 
-## Project setup
-```
-yarn install
-```
+[项目访问地址](https://spaas-daily-publish.netlify.com/)
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+登录需要用到 github token, 和用户名必须匹配的情况下才能登陆
