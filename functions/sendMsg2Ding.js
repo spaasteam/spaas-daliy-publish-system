@@ -14,15 +14,11 @@ exports.handler = function(event, context, callback) {
     }
   };
   axios
-    .post(
-      `${base}?access_token=25defed218f9ef430845d6aa5a515c727ffc9e47703176d455d2bd5a0cadbe25`,
-      body,
-      {
-        headers: {
-          "Content-Type": "application/json"
-        }
+    .post(`${base}?access_token=${process.env.DING_TOKEN}`, body, {
+      headers: {
+        "Content-Type": "application/json"
       }
-    )
+    })
     .then(res => {
       // console.log(res)
       callback(null, {
