@@ -1,4 +1,5 @@
-import mdtoc from './marked-toc'
+import mdtoc from "fe-markdown-toc";
+
 const start = "<!-- toc -->\n";
 const stop = "\n<!-- toc stop -->";
 const clean = /<!-- toc -->[\s\S]+<!-- toc stop -->/;
