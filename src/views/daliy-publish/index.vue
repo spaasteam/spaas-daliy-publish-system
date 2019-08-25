@@ -21,7 +21,7 @@ import {
   updateGithubFile
 } from "@/services/v1/github";
 
-import { postMessage2Group } from '@/services/v1/dingApi'
+import { postMessage2Group } from "@/services/v1/dingApi";
 
 import {
   encodeBase64,
@@ -56,14 +56,13 @@ const writeSummaryFile = async ({ gitMessage, title, link, body }) => {
     content
   });
 
-
-  return writeContent;
-  // await updateGithubFile({
-  //   path: summaryPath,
-  //   sha,
-  //   message: gitMessage,
-  //   content: writeContent
-  // });
+  // return writeContent;
+  await updateGithubFile({
+    path: summaryPath,
+    sha,
+    message: gitMessage,
+    content: writeContent
+  });
 };
 
 const writeReadmeFile = async ({ gitMessage, title, link, body }) => {
@@ -76,13 +75,13 @@ const writeReadmeFile = async ({ gitMessage, title, link, body }) => {
     body,
     content
   });
-  return writeContent;
-  // await updateGithubFile({
-  //   path: summaryPath,
-  //   sha,
-  //   message: gitMessage,
-  //   content: writeContent
-  // });
+  // return writeContent;
+  await updateGithubFile({
+    path: summaryPath,
+    sha,
+    message: gitMessage,
+    content: writeContent
+  });
 };
 
 const postFormData = [
@@ -143,7 +142,7 @@ export default {
 
     onMounted(() => {
       getLabels().then(data => {
-        labelList.value = data.map(({ id, name }) => ({
+        labelList.value = data.map(({ name }) => ({
           value: name,
           label: name
         }));
@@ -154,10 +153,10 @@ export default {
     const resetForm = () => {
       refs.form.updateForm({
         labels: [],
-        body:'',
-        title: ''
-      })
-    }
+        body: "",
+        title: ""
+      });
+    };
 
     // 提交 issue
     const post = () => {
@@ -177,13 +176,11 @@ export default {
 
           const params = {
             ...data,
-            title: data.title,
-            body: encodeBase64(data.bdoy)
+            title
           };
 
-          // const { html_url } = await postDaliy2Issue(data);
-          const html_url =
-            "https://api.github.com/repos/octocat/Hello-World/issues/1347";
+          const { html_url } = await postDaliy2Issue(params);
+
 
           const questionData = {
             gitMessage,
@@ -193,28 +190,26 @@ export default {
           };
 
           // 更新文件
-          await Promise.all([
-            writeReadmeFile({
-              ...questionData,
-              title: `### ${toDayTitle}`
-            }),
-            writeSummaryFile({ ...questionData, title: `### ${title}` })
-          ])
+          await writeReadmeFile({
+            ...questionData,
+            title: `### ${toDayTitle}`
+          });
+          await writeSummaryFile({ ...questionData, title: `### ${title}` });
 
           await postMessage2Group({
             title: toDayTitle,
             text: questionData.link
-          })
+          });
 
           toast("发布题目成功");
-          resetForm()
+          resetForm();
         } catch (error) {
           console.log(error);
         } finally {
           loading.value = false;
         }
 
-        console.log(data);
+        // console.log(data);
       });
     };
 

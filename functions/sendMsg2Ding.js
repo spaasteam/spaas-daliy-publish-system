@@ -1,22 +1,42 @@
 const axios = require("axios");
 const base = "https://oapi.dingtalk.com/robot/send";
-exports.handler = async function(event, context, cb) {
+exports.handler = function(event, context, callback) {
+  const data = JSON.parse(event.body);
 
-  await axios.post(
-    `${base}?access_toekn=7cd2c0105cc43f47486078ef15b73b8e0eb59a9763524627da74a5d37cec5df9`,
-    event.body,
-    {
-      headers: {
-        contentType: 'appliction/json'
+  const body = {
+    msgtype: "markdown",
+    markdown: {
+      title: data.title,
+      text: `#### ${data.title}\n` + `> ${data.text}\n`
+    },
+    at: {
+      isAtAll: true
+    }
+  };
+  axios
+    .post(
+      `${base}?access_token=25defed218f9ef430845d6aa5a515c727ffc9e47703176d455d2bd5a0cadbe25`,
+      body,
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
-    }
-  );
-
-  cb(null, {
-    statusCode: 200,
-    body: {
-      code: 0,
-      message: "success"
-    }
-  });
+    )
+    .then(res => {
+      // console.log(res)
+      callback(null, {
+        statusCode: 200,
+        body: JSON.stringify({
+          code: 0,
+          message: "success"
+        })
+      });
+    })
+    .catch(() => {
+      callback(null, {
+        statusCode: 500,
+        body: false
+      });
+    });
 };
