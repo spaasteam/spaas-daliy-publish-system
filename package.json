@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build:app": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "start": "netlify-lambda serve functions",
-    "build:fn": "netlify-lambda build functions",
-    "pub": "yarn && yarn build:client && yarn build:fn"
+    "build:lambda": "netlify-lambda build functions",
+    "build": "run-p build:**"
   },
   "dependencies": {
     "@femessage/el-data-table": "^1.7.3",
