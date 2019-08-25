@@ -21,14 +21,14 @@ import {
   updateGithubFile
 } from "@/services/v1/github";
 
+import { postMessage2Group } from '@/services/v1/dingApi'
+
 import {
   encodeBase64,
   decodeBase64,
   createSummaryContent,
-  createReadmeContent,
-  sendMsg2DingApi
+  createReadmeContent
 } from "@/common/utils";
-import { async, Promise } from "q";
 
 const getFileShaAndContent = path =>
   getGithubFile(path).then(({ sha, content }) => ({
@@ -200,7 +200,7 @@ export default {
             writeSummaryFile({ ...questionData, title: `### ${title}` })
           ])
 
-          await sendMsg2DingApi({
+          await postMessage2Group({
             title: toDayTitle,
             text: questionData.link
           })
