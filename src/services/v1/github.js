@@ -28,3 +28,9 @@ export const getGithubFile = path =>
   // 更新文件
 export const updateGithubFile = ({ path, ...params }) =>
   axios.$put(`${repos_base}/contents/${path}`, params);
+
+
+export const labelsApi = `${repos_base}/labels`;
+
+
+export const getlabelList = () => axios.$get(labelsApi)

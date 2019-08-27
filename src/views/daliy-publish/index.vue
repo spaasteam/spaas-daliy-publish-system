@@ -146,7 +146,7 @@ export default {
           value: name,
           label: name
         }));
-        refs.form.setOptions("labels", labelList.value);
+        refs.form && refs.form.setOptions("labels", labelList.value);
       });
     });
 

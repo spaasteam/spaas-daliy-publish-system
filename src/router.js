@@ -29,6 +29,11 @@ const router = new Router({
           path: "index",
           name: "daliy-publish-index",
           component: () => import("@/views/daliy-publish")
+        },
+        {
+          path: 'label-management',
+          name: 'labelManagement',
+          component: () => import("@/views/label-management")
         }
       ]
     }
