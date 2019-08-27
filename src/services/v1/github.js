@@ -31,4 +31,11 @@ export const updateGithubFile = ({ path, ...params }) =>
 
 export const labelsApi = `${repos_base}/labels`;
 
-export const getlabelList = () => axios.$get(labelsApi);
+export const getlabelList = () => axios.$get(`${labelsApi}?time=${Date.now()}`);
+
+export const postLabel = params => axios.$post(labelsApi, params);
+
+export const deleteLabel = name => axios.$delete(`${labelsApi}/${name}`);
+
+export const patchLabel = ({ currentName, ...params }) =>
+  axios.$patch(`${labelsApi}/${currentName}`, params);
