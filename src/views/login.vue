@@ -21,16 +21,18 @@
 </template>
 
 <script>
-import { value } from "vue-function-api";
+import { value, onMounted, onBeforeDestroy } from "vue-function-api";
 
 import { SYSTEM_NAME } from "@/common/const";
+
+import { debounce } from '@/common/utils'
 
 const loginForm = [
   {
     type: "input",
     id: "username",
     el: {
-      placeholder: "用户名/邮箱地址",
+      placeholder: "用户名",
       prefixIcon: "el-icon-user"
     },
     rules: [
@@ -87,6 +89,19 @@ export default {
           });
       });
     };
+
+    const handleListenerEnter = debounce((event) => {
+      if (event.key !== "Enter") return;
+      login();
+    });
+
+    onMounted(() => {
+      window.addEventListener("keyup", handleListenerEnter);
+    });
+
+    onBeforeDestroy(() => {
+      window.removeEventListener("keyup", handleListenerEnter);
+    });
 
     return {
       loginContent,
