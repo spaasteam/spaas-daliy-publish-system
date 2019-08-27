@@ -4,7 +4,8 @@
     v-on="$listeners"
     @click="handeClick"
     :disabled="!canClick"
-  >{{showText}}</el-button>
+    >{{ showText }}</el-button
+  >
 </template>
 
 <script>
@@ -52,5 +53,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

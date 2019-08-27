@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { value, onMounted, computed } from "vue-function-api";
+import { computed } from "vue-function-api";
 
 import Header from "./components/header";
 import VMenu from "./components/menu";
@@ -32,8 +32,7 @@ export default {
 
     const sideWidth = computed(() => {
       return sidebar.value.opened ? 200 : 120;
-    })
-
+    });
 
     return {
       sidebar,

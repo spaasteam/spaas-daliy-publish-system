@@ -7,10 +7,18 @@
       <h2>注册</h2>
       <el-form-renderer :content="registerContent" ref="form">
         <el-form-item>
-          <el-button type="primary" class="register-btn" :loading="loading" @click="hanldeRegister">注册</el-button>
+          <el-button
+            type="primary"
+            class="register-btn"
+            :loading="loading"
+            @click="hanldeRegister"
+            >注册</el-button
+          >
         </el-form-item>
         <el-form-item class="text-right">
-          <el-button @click="$router.push('/login')" type="text">已有账号</el-button>
+          <el-button @click="$router.push('/login')" type="text"
+            >已有账号</el-button
+          >
         </el-form-item>
       </el-form-renderer>
     </div>
@@ -21,14 +29,18 @@
       <p>请查看您的邮箱并点击其中连接进行邮箱验证！</p>
       <p>
         没有收到？
-        <count-button text="重新发送" @on-click="sendVertifyEmail" type="text"></count-button>
+        <count-button
+          text="重新发送"
+          @on-click="sendVertifyEmail"
+          type="text"
+        ></count-button>
       </p>
     </div>
   </div>
 </template>
 
 <script>
-import { value, computed, component } from "vue-function-api";
+import { value } from "vue-function-api";
 
 import { register, sendEmail } from "@/services/v1";
 

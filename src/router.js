@@ -31,8 +31,8 @@ const router = new Router({
           component: () => import("@/views/daliy-publish")
         },
         {
-          path: 'label-management',
-          name: 'labelManagement',
+          path: "label-management",
+          name: "labelManagement",
           component: () => import("@/views/label-management")
         }
       ]
@@ -61,7 +61,7 @@ router.beforeEach((to, from, next) => {
           )
           .then(next);
       } else {
-        next()
+        next();
       }
     }
   }

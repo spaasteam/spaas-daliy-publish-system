@@ -5,8 +5,17 @@
       <el-table-column label="颜色" prop="color">
         <template v-slot="{ row }">
           <div class="color-main">
-            <div class="color-span" :style="{background: `#${row.color}`}"></div>
-            <el-button v-clipboard:copy="`#${row.color}`" v-clipboard:success="clipboardSuccess" class="button" type="text">复制</el-button>
+            <div
+              class="color-span"
+              :style="{ background: `#${row.color}` }"
+            ></div>
+            <el-button
+              v-clipboard:copy="`#${row.color}`"
+              v-clipboard:success="clipboardSuccess"
+              class="button"
+              type="text"
+              >复制</el-button
+            >
           </div>
         </template>
       </el-table-column>
@@ -17,7 +26,7 @@
 <script>
 import { value, onMounted } from "vue-function-api";
 import { getlabelList } from "@/services/v1/github";
-import clipboard from '@/directive/clipboard/index.js'
+import clipboard from "@/directive/clipboard/index.js";
 
 export default {
   directives: {
@@ -25,17 +34,17 @@ export default {
   },
   setup(props, ctx) {
     const list = value([]);
-    const loading = value(false)
+    const loading = value(false);
 
-    const { toast} = ctx.root
+    const { toast } = ctx.root;
 
     onMounted(async () => {
-      loading.value = true
+      loading.value = true;
       list.value = await getlabelList();
-      loading.value = false
+      loading.value = false;
     });
 
-    const clipboardSuccess = () => toast('复制成功')
+    const clipboardSuccess = () => toast("复制成功");
 
     return {
       list,

@@ -1,6 +1,5 @@
 export const DING_TOKEN = process.env.DING_TOKEN;
 
-
 export const SYSTEM_NAME = "SPaas 每日一题发布系统";
 
 // 仓库 owner

@@ -4,12 +4,12 @@
 
 <script>
 export default {
-  name: 'IconFont',
+  name: "IconFont",
   props: {
     icon: {
-      type: String,
-    },
-  },
+      type: String
+    }
+  }
 };
 </script>
 <style></style>

@@ -1,9 +1,16 @@
 <template>
   <div class="daliy-publish">
     <h2 class="title-wrap">发布题目</h2>
-    <el-form-renderer :content="postContent" ref="form" label-width="60px" v-loading="loading">
+    <el-form-renderer
+      :content="postContent"
+      ref="form"
+      label-width="60px"
+      v-loading="loading"
+    >
       <el-form-item class="btn-wrap">
-        <el-button type="primary" :loading="loading" @click="post">发布</el-button>
+        <el-button type="primary" :loading="loading" @click="post"
+          >发布</el-button
+        >
       </el-form-item>
     </el-form-renderer>
   </div>
@@ -24,7 +31,6 @@ import {
 import { postMessage2Group } from "@/services/v1/dingApi";
 
 import {
-  encodeBase64,
   decodeBase64,
   createSummaryContent,
   createReadmeContent

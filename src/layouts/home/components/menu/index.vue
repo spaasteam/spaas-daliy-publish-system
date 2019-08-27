@@ -18,7 +18,7 @@
 
 <script>
 import MenuItem from "./menu-item";
-import { computed } from 'vue-function-api'
+import { computed } from "vue-function-api";
 import { menuList } from "./const";
 
 export default {
@@ -27,9 +27,9 @@ export default {
     [MenuItem.name]: MenuItem
   },
   setup(props, ctx) {
-    const { $store } = ctx.root
+    const { $store } = ctx.root;
 
-    const isCollapse = computed(() => !$store.getters.sidebar.opened)
+    const isCollapse = computed(() => !$store.getters.sidebar.opened);
     return {
       menuList,
       isCollapse

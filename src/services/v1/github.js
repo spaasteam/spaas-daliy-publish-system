@@ -25,12 +25,10 @@ export const getIssueList = params =>
 export const getGithubFile = path =>
   axios.$get(`${repos_base}/contents/${path}`);
 
-  // 更新文件
+// 更新文件
 export const updateGithubFile = ({ path, ...params }) =>
   axios.$put(`${repos_base}/contents/${path}`, params);
 
-
 export const labelsApi = `${repos_base}/labels`;
 
-
-export const getlabelList = () => axios.$get(labelsApi)
+export const getlabelList = () => axios.$get(labelsApi);

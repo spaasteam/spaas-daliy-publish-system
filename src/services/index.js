@@ -21,7 +21,7 @@ function axiosExtra(axios) {
 }
 
 const instance = axios.create({
-  timeout: 5000,
+  timeout: 5000
   // transformResponse: [data => data]
   // validateStatus: function(status) {
   //   return true;
@@ -41,7 +41,6 @@ instance.interceptors.request.use(
   }
 );
 
-
 // http response 拦截器
 instance.interceptors.response.use(
   res => {
@@ -49,10 +48,10 @@ instance.interceptors.response.use(
 
     if (status === 401) {
       Message.error({
-        message: '无效的token'
+        message: "无效的token"
       });
-      router.push('/login')
-      localStorage.removeItem('access_token')
+      router.push("/login");
+      localStorage.removeItem("access_token");
       return Promise.reject(data);
     }
 

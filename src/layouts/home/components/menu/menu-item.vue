@@ -21,24 +21,24 @@
 </template>
 
 <script>
-import IconFont from './icon-font.vue';
+import IconFont from "./icon-font.vue";
 
 export default {
-  name: 'MenuItem',
+  name: "MenuItem",
   components: {
-    IconFont,
+    IconFont
   },
   props: {
     menuList: {
-      type: Array,
-    },
+      type: Array
+    }
   },
   methods: {
     checkUrl(urlString) {
       const reg = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
       return urlString && reg.test(urlString);
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less">

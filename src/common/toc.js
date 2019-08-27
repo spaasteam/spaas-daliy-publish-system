@@ -16,5 +16,4 @@ const toc = content => {
   return content;
 };
 
-
-export default toc
+export default toc;

@@ -7,7 +7,7 @@
       <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
           <img class="user_avatar" :src="user.avatar_url" alt="avatar" />
-          <span class="username">{{user.username}}</span>
+          <span class="username">{{ user.username }}</span>
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
@@ -24,8 +24,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { computed, value } from "vue-function-api";
+import { computed } from "vue-function-api";
 export default {
   name: "VHeader",
   setup(props, ctx) {
