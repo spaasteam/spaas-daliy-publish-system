@@ -19,7 +19,7 @@
     "dayjs": "^1.8.15",
     "dotenv": "^8.1.0",
     "element-ui": "^2.3.6",
-    "fe-markdown-toc": "^0.1.0",
+    "fe-markdown-toc": "^0.1.1",
     "lodash": "^4.17.15",
     "markdown-toc": "^1.2.0",
     "marked": "^0.7.0",

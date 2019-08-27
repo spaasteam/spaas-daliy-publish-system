@@ -1,4 +1,4 @@
-import toc from "./toc";
+const mdtoc = require("fe-markdown-toc");
 import { postMessage2Group } from "@/services/v1/dingApi";
 
 export const encodeBase64 = data => btoa(unescape(encodeURIComponent(data)));
@@ -11,7 +11,7 @@ export const createSummaryContent = ({ title, body, link, content }) => {
 
   const questionContent = [content].concat(newQuestionContent).join("\n\n");
 
-  return encodeBase64(toc(questionContent)); // 返回可写数据
+  return encodeBase64(mdtoc.insert(questionContent)); // 返回可写数据
 };
 
 // 创建 README.md 内容

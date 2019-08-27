@@ -4021,10 +4021,10 @@ faye-websocket@~0.11.1:
   dependencies:
     websocket-driver ">=0.5.1"
 
-fe-markdown-toc@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/fe-markdown-toc/-/fe-markdown-toc-0.1.0.tgz#e6f7145769d0bebf9656d7922105a2e5c1510373"
-  integrity sha512-nMwq2f8fTssShGgTIA5xhTmy6PXGmWf7OuT1+hFKWjnz3Hu3ABq+NM6uPShCBkmtTgCR2cmLHw/t3w3duvsYbQ==
+fe-markdown-toc@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/fe-markdown-toc/-/fe-markdown-toc-0.1.1.tgz#86348a318e30a4e75b82796752c1f35f40a5874e"
+  integrity sha512-ve71dDNeArRO4UoLurmGhH4NgQrk47R79VqMTTyMcJZY7w/TK7nRQSskKVzoUAzbrtpL9WEDvFOUCTd6ARaIcQ==
   dependencies:
     lodash "~2.4.1"
     marked "0.3.0"

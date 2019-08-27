@@ -6,18 +6,29 @@
     :before-close="handleBeforeClose"
     class="loading-dialog"
   >
-    <div class="loading-dialog-content" ref="content" :style="{width: contentWidth}">
+    <div
+      class="loading-dialog-content"
+      ref="content"
+      :style="{ width: contentWidth }"
+    >
       <slot></slot>
     </div>
     <slot name="footer">
       <span slot="footer" class="dialog-footer" v-if="hasFooter">
-        <el-button v-if="hasCancel" @click="handleClose">{{cancelButtonText}}</el-button>
+        <el-button v-if="hasCancel" @click="handleClose">{{
+          cancelButtonText
+        }}</el-button>
         <el-button
           type="primary"
-          :disabled="typeof confirmDisabled === 'function' ? confirmDisabled() : confirmDisabled"
+          :disabled="
+            typeof confirmDisabled === 'function'
+              ? confirmDisabled()
+              : confirmDisabled
+          "
           @click="handleComfirm"
           :loading="btnLoading"
-        >{{confirmButtonText}}</el-button>
+          >{{ confirmButtonText }}</el-button
+        >
       </span>
     </slot>
   </el-dialog>
@@ -25,7 +36,7 @@
 
 <script>
 export default {
-  name: 'LoadingDialog',
+  name: "LoadingDialog",
   inheritAttrs: false,
   props: {
     /**
@@ -40,15 +51,15 @@ export default {
      */
     contentWidth: {
       type: String,
-      default: '100%'
+      default: "100%"
     },
     confirmButtonText: {
       type: String,
-      default: '确定'
+      default: "确定"
     },
     cancelButtonText: {
       type: String,
-      default: '取消'
+      default: "取消"
     },
     // 是否有取消按钮
     hasCancel: {
@@ -85,54 +96,54 @@ export default {
   data() {
     return {
       btnLoading: false,
-      contentHeight: 'auto'
-    }
+      contentHeight: "auto"
+    };
   },
   computed: {
     visibleValue: {
       get() {
-        return this.visible
+        return this.visible;
       },
       set(val) {
-        this.$emit('update:visible', val)
+        this.$emit("update:visible", val);
       }
     }
   },
   methods: {
     handleBeforeClose() {
       Promise.resolve(this.beforeClose()).then(flag => {
-        if (!flag) return
-        this.handleClose()
-      })
+        if (!flag) return;
+        this.handleClose();
+      });
     },
     handleClose() {
       /**
        * 双向绑定 visible
        */
-      this.$emit('update:visible', false)
+      this.$emit("update:visible", false);
       /**
        * 关闭时间
        */
-      this.$emit('close')
+      this.$emit("close");
     },
     handleComfirm() {
-      this.btnLoading = true
+      this.btnLoading = true;
 
       Promise.resolve(this.confirm())
         .then(flag => {
-          if (!flag) return
+          if (!flag) return;
           /**
            * 确认成功
            */
-          this.$emit('confirm')
+          this.$emit("confirm");
         })
         .catch(e => console.log(e))
         .finally(() => {
-          this.btnLoading = false
-        })
+          this.btnLoading = false;
+        });
     }
   }
-}
+};
 </script>
 
 <style lang="less">
