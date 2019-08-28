@@ -91,6 +91,7 @@ const START_TIME = new Date("2019 08-27").getTime(); // 27 号开始，应该从
 
 const ONE_DAY = 60 * 60 * 1000 * 24;
 const WEEK = 7;
+const REPAIR_DAY = 3; // 要计算到周，但是我们是从周三开始的，所以加上
 
 export const generatorDate = (d = new Date()) => {
   const day = d.getDate();
@@ -107,7 +108,7 @@ export const getUser = (data = [], date = new Date()) => {
 
   let offset = (endTime - START_TIME) / ONE_DAY;
 
-  const weekDay = ~~(offset / WEEK) * 2; // 需要减去的周末天数
+  const weekDay = Math.floor((offset + REPAIR_DAY) / WEEK) * 2; // 需要减去的周末天数
 
   const index = (offset - weekDay) % data.length; // data.length 就是安排的周期，除余 得到对应人员
 

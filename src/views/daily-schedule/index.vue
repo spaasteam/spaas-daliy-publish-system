@@ -5,12 +5,16 @@
       <template slot="dateCell" slot-scope="{ date, data }">
         <div class="date-main">
           <div class="date">
-            {{ data.day
-            .split("-")
-            .slice(1)
-            .join("-")}}
+            {{
+              data.day
+                .split("-")
+                .slice(1)
+                .join("-")
+            }}
           </div>
-          <div class="name">{{getUserName(date)}} {{ data.isSelected ? "✔️" : "" }}</div>
+          <div class="name">
+            {{ getUserName(date) }} {{ data.isSelected ? "✔️" : "" }}
+          </div>
         </div>
       </template>
     </el-calendar>
@@ -32,7 +36,7 @@ export default {
     });
 
     const getUserName = date => {
-      if (judgeIsWeekEnd(date)) return `休息`
+      if (judgeIsWeekEnd(date)) return `休息`;
 
       const user = getUser(userList.value, date);
       return user && user.name;
@@ -59,6 +63,5 @@ export default {
       transform: translate(-50%, -50%);
     }
   }
-
 }
 </style>
