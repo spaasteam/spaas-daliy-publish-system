@@ -34,6 +34,11 @@ const router = new Router({
           path: "label-management",
           name: "labelManagement",
           component: () => import("@/views/label-management")
+        },
+        {
+          path: "daily-schedule",
+          name: "dailySchedule",
+          component: () => import("@/views/daily-schedule")
         }
       ]
     }
