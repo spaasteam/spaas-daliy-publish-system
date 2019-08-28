@@ -25,7 +25,7 @@ import { value, onMounted, onBeforeDestroy } from "vue-function-api";
 
 import { SYSTEM_NAME } from "@/common/const";
 
-import { debounce } from '@/common/utils'
+import { debounce } from "@/common/utils";
 
 const loginForm = [
   {
@@ -90,7 +90,7 @@ export default {
       });
     };
 
-    const handleListenerEnter = debounce((event) => {
+    const handleListenerEnter = debounce(event => {
       if (event.key !== "Enter") return;
       login();
     });

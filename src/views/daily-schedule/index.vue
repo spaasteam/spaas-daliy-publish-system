@@ -2,30 +2,63 @@
   <div class="daily-schedule">
     <el-calendar>
       <!-- 这里使用的是 2.5 slot 语法，对于新项目请使用 2.6 slot 语法-->
-      <template slot="dateCell" slot-scope="{date, data}">
-        <p
-          :class="data.isSelected ? 'is-selected' : ''"
-        >{{ data.day.split('-').slice(1).join('-') }} {{ data.isSelected ? '✔️' : ''}}</p>
+      <template slot="dateCell" slot-scope="{ date, data }">
+        <div class="date-main">
+          <div class="date">
+            {{ data.day
+            .split("-")
+            .slice(1)
+            .join("-")}}
+          </div>
+          <div class="name">{{getUserName(date)}} {{ data.isSelected ? "✔️" : "" }}</div>
+        </div>
       </template>
     </el-calendar>
   </div>
 </template>
 
 <script>
-import { onMounted } from "vue-function-api";
+import { onMounted, value } from "vue-function-api";
 import { getUserJson } from "@/services/v1/data.js";
+import { getUser, judgeIsWeekEnd } from "@/common/utils";
 export default {
   setup() {
-    onMounted(params => {
+    const userList = value([]);
+
+    onMounted(() => {
       getUserJson().then(data => {
-        console.log(data);
+        userList.value = data;
       });
     });
 
-    return {};
+    const getUserName = date => {
+      if (judgeIsWeekEnd(date)) return `休息`
+
+      const user = getUser(userList.value, date);
+      return user && user.name;
+    };
+
+    return {
+      userList,
+      getUserName
+    };
   }
 };
 </script>
 
-<style>
+<style lang="less">
+.daily-schedule {
+  .date-main {
+    position: relative;
+    height: 100%;
+
+    .name {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+}
 </style>

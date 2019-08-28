@@ -86,3 +86,35 @@ export function debounce(func, wait = 500, immediate) {
     return result;
   };
 }
+
+const START_TIME = new Date("2019 08-27").getTime(); // 27 号开始，应该从 26开始算
+
+const ONE_DAY = 60 * 60 * 1000 * 24;
+const WEEK = 7;
+
+export const generatorDate = (d = new Date()) => {
+  const day = d.getDate();
+  const month = d.getMonth() + 1;
+  const year = d.getFullYear();
+
+  return new Date(`${year} ${month}-${day}`);
+};
+
+export const getUser = (data = [], date = new Date()) => {
+  const d = generatorDate(date);
+
+  const endTime = d.getTime();
+
+  let offset = (endTime - START_TIME) / ONE_DAY;
+
+  const weekDay = ~~(offset / WEEK) * 2; // 需要减去的周末天数
+
+  const index = (offset - weekDay) % data.length; // data.length 就是安排的周期，除余 得到对应人员
+
+  return data[index];
+};
+
+// 判断是否是周六日
+export const judgeIsWeekEnd = (date = new Date()) => {
+  return [0, 6].includes(date.getDay());
+};
