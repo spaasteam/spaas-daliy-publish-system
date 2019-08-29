@@ -87,7 +87,7 @@ export function debounce(func, wait = 500, immediate) {
   };
 }
 
-const START_TIME = new Date("2019 08-27").getTime(); // 27 号开始，应该从 26开始算
+export const START_TIME = new Date("2019 08-27").getTime(); // 27 号开始，应该从 26开始算
 
 const ONE_DAY = 60 * 60 * 1000 * 24;
 const WEEK = 7;

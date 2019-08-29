@@ -24,7 +24,7 @@
 <script>
 import { onMounted, value } from "vue-function-api";
 import { getUserJson } from "@/services/v1/data.js";
-import { getUser, judgeIsWeekEnd } from "@/common/utils";
+import { getUser, judgeIsWeekEnd, START_TIME } from "@/common/utils";
 export default {
   setup() {
     const userList = value([]);
@@ -36,6 +36,8 @@ export default {
     });
 
     const getUserName = date => {
+      if (date.getTime() < START_TIME) return
+
       if (judgeIsWeekEnd(date)) return `休息`;
 
       const user = getUser(userList.value, date);
