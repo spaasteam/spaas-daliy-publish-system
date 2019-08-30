@@ -6,15 +6,13 @@
         <div class="date-main">
           <div class="date">
             {{
-              data.day
-                .split("-")
-                .slice(1)
-                .join("-")
+            data.day
+            .split("-")
+            .slice(1)
+            .join("-")
             }}
           </div>
-          <div class="name">
-            {{ getUserName(date) }} {{ data.isSelected ? "✔️" : "" }}
-          </div>
+          <div class="name">{{ getUserName(date) }} {{ data.isSelected ? "✔️" : "" }}</div>
         </div>
       </template>
     </el-calendar>
@@ -22,26 +20,33 @@
 </template>
 
 <script>
-import { onMounted, value } from "vue-function-api";
+import { onMounted, value, computed } from "vue-function-api";
 import { getUserJson } from "@/services/v1/data.js";
-import { getUser, judgeIsWeekEnd, START_TIME } from "@/common/utils";
+import { getUser, START_TIME, getRecentDays } from "@/common/utils";
 export default {
-  setup() {
+  setup(props, ctx) {
+    const { $store } = ctx.root;
     const userList = value([]);
+
+    const userInfo = computed(() => $store.getters.user);
 
     onMounted(() => {
       getUserJson().then(data => {
         userList.value = data;
+
+        // const recentData = getRecentDays(data).filter(
+        //   ({ user }) => user && user.account === userInfo.value.username
+        // );
+
+        // console.log(`您最近一天的发题时间为 ： ` + recentData[0].date.toLocaleDateString());
       });
     });
 
     const getUserName = date => {
-      if (date.getTime() < START_TIME) return
-
-      if (judgeIsWeekEnd(date)) return `休息`;
+      if (date.getTime() < START_TIME) return;
 
       const user = getUser(userList.value, date);
-      return user && user.name;
+      return (user && user.name) || "休息";
     };
 
     return {

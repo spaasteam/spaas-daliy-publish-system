@@ -101,6 +101,11 @@ export const generatorDate = (d = new Date()) => {
   return new Date(`${year} ${month}-${day}`);
 };
 
+// 判断是否是周六日
+export const judgeIsWeekEnd = (date = new Date()) => {
+  return [0, 6].includes(date.getDay());
+};
+
 export const getUser = (data = [], date = new Date()) => {
   const d = generatorDate(date);
 
@@ -112,10 +117,18 @@ export const getUser = (data = [], date = new Date()) => {
 
   const index = (offset - weekDay) % data.length; // data.length 就是安排的周期，除余 得到对应人员
 
-  return data[index];
+  return !judgeIsWeekEnd(date) ? data[index] : null;
 };
 
-// 判断是否是周六日
-export const judgeIsWeekEnd = (date = new Date()) => {
-  return [0, 6].includes(date.getDay());
+export const getRecentDays = (data, date = generatorDate(), days = 30) => {
+  const result = [];
+  let start = date.getTime();
+  for (let i = 0; i < days; i++) {
+    const d = new Date(start + i * ONE_DAY);
+    result.push({
+      date: d,
+      user: getUser(data, d)
+    });
+  }
+  return result;
 };
