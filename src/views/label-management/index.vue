@@ -75,7 +75,7 @@ export default {
       loading.value = true;
       list.value = await getlabelList();
       loading.value = false;
-    };
+    }
 
     const clipboardSuccess = () => toast("复制成功");
 
@@ -89,8 +89,8 @@ export default {
           name: ""
         });
         refs.form.clearValidate && refs.form.clearValidate();
-      });
-    };
+      })
+    }
 
     const handleEdit = row => {
       oldName = row.name;
@@ -102,8 +102,8 @@ export default {
           color: `#${row.color}`,
           name: row.anme
         });
-      });
-    };
+      })
+    }
 
     const handleDelete = row => {
       $loadingConfirm({
@@ -115,7 +115,7 @@ export default {
             getList();
           })
       });
-    };
+    }
 
     const handleValidateForm = async () => {
       const data = await validateForm(refs.form);
@@ -136,12 +136,12 @@ export default {
         toast("操作成功");
         getList();
         dialogVisible.value = false;
-      });
-    };
+      })
+    }
 
     onMounted(() => {
       getList();
-    });
+    })
 
     const labelTitle = computed(() =>
       labelEdit.value ? "编辑标签" : "新增标签"

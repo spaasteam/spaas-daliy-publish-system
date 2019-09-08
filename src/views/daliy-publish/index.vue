@@ -1,16 +1,23 @@
 <template>
   <div class="daliy-publish">
     <h2 class="title-wrap">发布题目</h2>
-    <el-form-renderer
-      :content="postContent"
-      ref="form"
-      label-width="60px"
-      v-loading="loading"
-    >
-      <el-form-item class="btn-wrap">
-        <el-button type="primary" :loading="loading" @click="post"
-          >发布</el-button
-        >
+    <el-form-renderer :content="postContent" ref="form" label-width="60px" class="publish-form">
+      <div class="publish-content-mask" v-show="readyPublish"></div>
+    </el-form-renderer>
+    <el-form-renderer :content="[]">
+      <el-form-item class="btn-wrap" v-if="!readyPublish">
+        <el-button type="primary" @click="post">预备发布</el-button>
+      </el-form-item>
+      <el-form-item v-show="eventList.length">
+        <el-steps :active="activeIndex" simple>
+          <el-step v-for="item in eventList" :key="item.title" :title="item.title"></el-step>
+          <!-- <el-step title="步骤 1" icon="el-icon-edit"></el-step>
+          <el-step title="步骤 2" icon="el-icon-upload"></el-step>
+          <el-step title="步骤 3" icon="el-icon-picture"></el-step>-->
+        </el-steps>
+      </el-form-item>
+      <el-form-item class="btn-wrap" v-if="readyPublish">
+        <el-button type="primary" :loading="loading" @click="runTask">发布</el-button>
       </el-form-item>
     </el-form-renderer>
   </div>
@@ -35,6 +42,7 @@ import {
   createSummaryContent,
   createReadmeContent
 } from "@/common/utils";
+import { Promise } from "q";
 
 const getFileShaAndContent = path =>
   getGithubFile(path).then(({ sha, content }) => ({
@@ -49,12 +57,11 @@ const getLastQuestionNumber = () =>
     page: 1
   }).then(([data]) => Number(data.title.match(/\d+/)[0]) + 1);
 
-// title, body, link
+// 写汇总文件 为什么要返回 link ? 因为后续需要
 const writeSummaryFile = async ({ gitMessage, title, link, body }) => {
   const summaryPath = "datum/summary.md";
 
   const { content, sha } = await getFileShaAndContent(summaryPath);
-
   const writeContent = createSummaryContent({
     title,
     link,
@@ -71,10 +78,12 @@ const writeSummaryFile = async ({ gitMessage, title, link, body }) => {
   });
 };
 
+// 写 readme 文件
 const writeReadmeFile = async ({ gitMessage, title, link, body }) => {
   const summaryPath = "README.md";
 
   const { content, sha } = await getFileShaAndContent(summaryPath);
+
   const writeContent = createReadmeContent({
     title,
     link,
@@ -141,6 +150,9 @@ export default {
     const labelList = value([]);
     const postContent = value(postFormData);
     const loading = value(false);
+    const eventList = value([]);
+    const readyPublish = value(false);
+    const activeIndex = value(0);
     const {
       refs,
       root: { toast }
@@ -162,6 +174,34 @@ export default {
         body: "",
         title: ""
       });
+      eventList.value = [];
+      activeIndex.value = 0;
+      readyPublish.value = false;
+    };
+
+    const runTask = async () => {
+      loading.value = true;
+      for (let i = 0; i < eventList.value.length; i++) {
+        const item = eventList.value[i];
+
+        if (item.success) continue;
+        try {
+          await item.cb().then(() => {
+            item.success = true;
+            activeIndex.value = i + 1;
+          });
+        } catch (error) {
+          loading.value = false;
+          toast(
+            `由于网络原因导致任务异常，请再次点击发布， 任务 将从 ${item.title} 重新开始`,
+            "warning"
+          );
+          return;
+        }
+      }
+      loading.value = false;
+      toast("发布成功!");
+      resetForm();
     };
 
     // 提交 issue
@@ -179,35 +219,59 @@ export default {
           const title = `第 ${number} 题: ${data.title}`;
           const toDayTitle = `今日题目 ${data.title}`;
           const gitMessage = `feat: ${title}`;
+          const link = `https://github.com/spaasteam/spaas-daily-practice/issues/${number +
+            1}`;
 
           const params = {
             ...data,
             title
           };
 
-          const { html_url } = await postDaliy2Issue(params);
-
           const questionData = {
             gitMessage,
             title,
             body: data.body,
-            link: `[做题连接](${html_url})`
+            link: `[做题连接](${link})`
           };
 
-          // 更新文件
-          await writeReadmeFile({
-            ...questionData,
-            title: `### ${toDayTitle}`
-          });
-          await writeSummaryFile({ ...questionData, title: `### ${title}` });
+          // const { html_url } = await postDaliy2Issue(params);
 
-          await postMessage2Group({
-            title: toDayTitle,
-            text: questionData.link
+          eventList.value.push({
+            cb: () => postDaliy2Issue(params),
+            success: false,
+            title: "发布 issue 到 题目仓库"
           });
 
-          toast("发布题目成功");
-          resetForm();
+          // 添加写 readme 文件任务到队列
+          eventList.value.push({
+            cb: () =>
+              writeReadmeFile({ ...questionData, title: `### ${toDayTitle}` }),
+            success: false,
+            title: "发布题目到 README 文件"
+          });
+
+          // 添加 写 smmary 文件任务到队列
+          eventList.value.push({
+            cb: () =>
+              writeSummaryFile({ ...questionData, title: `### ${title}` }),
+            success: false,
+            title: "发布题目到 summary 文件"
+          });
+
+          // 推送钉钉
+          eventList.value.push({
+            cb: () =>
+              postMessage2Group({
+                title: toDayTitle,
+                text: questionData.link
+              }),
+            success: false,
+            title: "通知 钉钉 群聊"
+          });
+
+          toast("预备工作完成，请点击发布题目");
+          // resetForm();
+          readyPublish.value = true;
         } catch (error) {
           console.log(error);
         } finally {
@@ -222,7 +286,11 @@ export default {
       labelList,
       postContent,
       post,
-      loading
+      loading,
+      eventList,
+      readyPublish,
+      activeIndex,
+      runTask
     };
   }
 };
@@ -246,6 +314,20 @@ export default {
   }
   .v-note-wrapper {
     min-height: 400px;
+  }
+
+  .publish-form {
+    position: relative;
+    .publish-content-mask {
+      cursor: not-allowed;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: rgba(255, 255, 255, 0.5);
+      width: 100%;
+      height: 100%;
+      z-index: 1600;
+    }
   }
 }
 </style>

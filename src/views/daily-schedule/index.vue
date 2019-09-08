@@ -6,13 +6,15 @@
         <div class="date-main">
           <div class="date">
             {{
-            data.day
-            .split("-")
-            .slice(1)
-            .join("-")
+              data.day
+                .split("-")
+                .slice(1)
+                .join("-")
             }}
           </div>
-          <div class="name">{{ getUserName(date) }} {{ data.isSelected ? "✔️" : "" }}</div>
+          <div class="name">
+            {{ getUserName(date) }} {{ data.isSelected ? "✔️" : "" }}
+          </div>
         </div>
       </template>
     </el-calendar>
@@ -39,7 +41,7 @@ export default {
         // );
 
         // console.log(`您最近一天的发题时间为 ： ` + recentData[0].date.toLocaleDateString());
-      });
+      })
     });
 
     const getUserName = date => {

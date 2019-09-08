@@ -32,7 +32,7 @@ export default {
 
     const sideWidth = computed(() => {
       return sidebar.value.opened ? 200 : 120;
-    });
+    })
 
     return {
       sidebar,

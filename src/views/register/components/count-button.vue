@@ -26,23 +26,23 @@ export default {
       canClick.value = false;
       ctx.emit("on-click");
 
-      let timer = setInterval(() => {
+      const timer = setInterval(() => {
         number.value--;
         if (number.value === 0) {
           canClick.value = true;
           clearInterval(timer);
         }
       }, 1000);
-    };
+    }
 
     onMounted(() => {
       handeClick();
-    });
+    })
 
-    let showText = computed(() => {
+    const showText = computed(() => {
       if (canClick.value) return props.text;
       return `${number.value} 秒后重试`;
-    });
+    })
 
     return {
       canClick,

@@ -32,7 +32,7 @@ export default {
 
     const user = computed(() => {
       return $store.getters.user;
-    });
+    })
 
     const toggleMenu = () => {
       $store.commit("app/TOGGLE_SIDEBAR");
@@ -51,7 +51,7 @@ export default {
       };
 
       fnMap[key] && fnMap[key]();
-    };
+    }
 
     const menuIcon = computed(() => {
       return $store.getters.sidebar.opened

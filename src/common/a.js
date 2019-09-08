@@ -8,21 +8,21 @@ export const generatorDate = (d = new Date()) => {
   const year = d.getFullYear();
 
   return new Date(`${year} ${month}-${day}`);
-};
+}
 
 const getUser = (data = [], date = new Date()) => {
   const d = generatorDate(date);
 
   const endTime = d.getTime();
 
-  let offset = (endTime - START_TIME) / ONE_DAY;
+  const offset = (endTime - START_TIME) / ONE_DAY;
 
   const weekDay = Math.floor((offset + REPAIR_DAY) / WEEK) * 2; // 需要减去的周末天数
 
   const index = (offset - weekDay) % data.length; // data.length 就是安排的周期，除余 得到对应人员
 
   return data[index];
-};
+}
 
 const getRecentDays = (date = generatorDate(), data, days = 30) => {
   const result = [];

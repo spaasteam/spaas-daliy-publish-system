@@ -4,7 +4,7 @@ import store from "@/store";
 import router from "@/router";
 
 function axiosExtra(axios) {
-  for (let method of [
+  for (const method of [
     "request",
     "delete",
     "get",
@@ -16,12 +16,12 @@ function axiosExtra(axios) {
   ]) {
     axios["$" + method] = function() {
       return this[method].apply(this, arguments).then(res => res && res.data);
-    };
+    }
   }
 }
 
 const instance = axios.create({
-  timeout: 5000
+  timeout: 2000
   // transformResponse: [data => data]
   // validateStatus: function(status) {
   //   return true;
