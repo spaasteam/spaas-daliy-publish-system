@@ -55,7 +55,10 @@ const getLastQuestionNumber = () =>
   getIssueList({
     per_page: 1,
     page: 1
-  }).then(([data]) => Number(data.title.match(/\d+/)[0]) + 1);
+  }).then(([data]) => ({
+    titleNumber: Number(data.title.match(/\d+/)[0]) + 1,
+    number: data.number
+  }));
 
 // 写汇总文件 为什么要返回 link ? 因为后续需要
 const writeSummaryFile = async ({ gitMessage, title, link, body }) => {
@@ -214,9 +217,9 @@ export default {
         loading.value = true;
 
         try {
-          const number = await getLastQuestionNumber(); // 获取最近的题目标号
+          const { titleNumber, number } = await getLastQuestionNumber(); // 获取最近的题目标号
 
-          const title = `第 ${number} 题: ${data.title}`;
+          const title = `第 ${titleNumber} 题: ${data.title}`;
           const toDayTitle = `今日题目 ${data.title}`;
           const gitMessage = `feat: ${title}`;
           const link = `https://github.com/spaasteam/spaas-daily-practice/issues/${number +
