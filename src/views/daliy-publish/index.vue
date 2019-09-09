@@ -1,12 +1,12 @@
 <template>
   <div class="daliy-publish">
     <h2 class="title-wrap">发布题目</h2>
-    <el-form-renderer :content="postContent" ref="form" label-width="60px" class="publish-form">
+    <el-form-renderer :content="postContent" ref="form" label-width="60px" class="publish-form" v-loading="readyLoading">
       <div class="publish-content-mask" v-show="readyPublish"></div>
     </el-form-renderer>
     <el-form-renderer :content="[]">
       <el-form-item class="btn-wrap" v-if="!readyPublish">
-        <el-button type="primary" @click="post">预备发布</el-button>
+        <el-button type="primary" @click="handleReadyPublish" v-loading="readyLoading">预备发布</el-button>
       </el-form-item>
       <el-form-item v-show="eventList.length">
         <el-steps :active="activeIndex" simple>
@@ -155,6 +155,7 @@ export default {
     const loading = value(false);
     const eventList = value([]);
     const readyPublish = value(false);
+    const readyLoading = value(false)
     const activeIndex = value(0);
     const {
       refs,
@@ -208,13 +209,13 @@ export default {
     };
 
     // 提交 issue
-    const post = () => {
+    const handleReadyPublish = () => {
       refs.form.validate(async validate => {
         if (!validate) return;
 
         const data = refs.form.getFormValue();
 
-        loading.value = true;
+        readyLoading.value = true;
 
         try {
           const { titleNumber, number } = await getLastQuestionNumber(); // 获取最近的题目标号
@@ -278,7 +279,7 @@ export default {
         } catch (error) {
           console.log(error);
         } finally {
-          loading.value = false;
+          readyLoading.value = false;
         }
 
         // console.log(data);
@@ -288,7 +289,8 @@ export default {
     return {
       labelList,
       postContent,
-      post,
+      handleReadyPublish,
+      readyLoading,
       loading,
       eventList,
       readyPublish,
