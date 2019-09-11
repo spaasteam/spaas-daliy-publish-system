@@ -1,5 +1,4 @@
-[
-  {
+[{
     "account": "linrunzheng",
     "name": "郑润林",
     "phone": "13570465248"
@@ -58,5 +57,9 @@
     "account": "Curry30XTY",
     "name": "蔡展豪",
     "phone": "18814383180"
+  },
+  {
+    "account": "xiaowei",
+    "name": "邓小伟"
   }
 ]

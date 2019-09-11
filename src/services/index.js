@@ -21,7 +21,7 @@ function axiosExtra(axios) {
 }
 
 const instance = axios.create({
-  timeout: 2000
+  timeout: 6000
   // transformResponse: [data => data]
   // validateStatus: function(status) {
   //   return true;
