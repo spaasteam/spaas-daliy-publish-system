@@ -4,7 +4,6 @@ export const menuList = [
     children: [
       { name: "发布题目", path: "/daliy-publish/index" },
       { name: "标签管理", path: "/daliy-publish/label-management" }
-      // { name: "发题安排表", path: "/daliy-publish/daily-schedule" }
     ]
   }
 ];
