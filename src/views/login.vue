@@ -28,21 +28,21 @@ import { SYSTEM_NAME } from "@/common/const";
 import { debounce } from "@/common/utils";
 
 const loginForm = [
-  {
-    type: "input",
-    id: "username",
-    el: {
-      placeholder: "用户名",
-      prefixIcon: "el-icon-user"
-    },
-    rules: [
-      {
-        trigger: "blur",
-        required: true,
-        message: "请填写用户名"
-      }
-    ]
-  },
+  // {
+  //   type: "input",
+  //   id: "username",
+  //   el: {
+  //     placeholder: "用户名",
+  //     prefixIcon: "el-icon-user"
+  //   },
+  //   rules: [
+  //     {
+  //       trigger: "blur",
+  //       required: true,
+  //       message: "请填写用户名"
+  //     }
+  //   ]
+  // },
   {
     type: "input",
     id: "access_token",
@@ -82,7 +82,7 @@ export default {
             $router.push("/");
           })
           .catch(() => {
-            toast("用户名错误", "error");
+            toast("出现了点小错误，客观请充实一下~", "error");
           })
           .finally(() => {
             loading.value = false;

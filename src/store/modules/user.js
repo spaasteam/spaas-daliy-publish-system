@@ -1,9 +1,11 @@
+import GitHub from "github-api";
 import { getUserInfo } from "@/services/v1/github";
 
 const state = {
   access_token: "",
   username: "admin",
-  avatar_url: ""
+  avatar_url: "",
+  gh: null
 };
 
 async function getUserInfoNoop(access_token) {
@@ -17,22 +19,25 @@ async function getUserInfoNoop(access_token) {
 
 const actions = {
   async login({ commit }, { username, access_token }) {
-    const data = await getUserInfoNoop(access_token);
+    const gh = new GitHub({ token: access_token });
+    const userHandle = gh.getUser();
 
-    if (data.login !== username) {
-      throw new Error("用户名错误");
-    }
+    const { data } = await userHandle.getProfile();
 
     localStorage.setItem("access_token", access_token);
 
     commit("update", {
       access_token,
-      username,
-      avatar_url: data.avatar_url
+      username: data.login,
+      avatar_url: data.avatar_url,
+      gh
     });
   },
   async getUserInfoByToken({ commit }, access_token) {
-    const data = await getUserInfoNoop(access_token);
+    const gh = new GitHub({ token: access_token });
+    const userHandle = gh.getUser();
+
+    const { data } = await userHandle.getProfile();
 
     localStorage.setItem("access_token", access_token);
 
