@@ -27,8 +27,8 @@ export default {
     [MenuItem.name]: MenuItem
   },
   setup(props, ctx) {
-    const { $store } = ctx.root;
-
+    const { $store, $route, $router } = ctx.root;
+    console.log($route, $router);
     const isCollapse = computed(() => !$store.getters.sidebar.opened);
     return {
       menuList,
