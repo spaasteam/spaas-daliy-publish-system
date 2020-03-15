@@ -1,6 +1,6 @@
 export const DING_TOKEN = process.env.DING_TOKEN;
 
-console.log(process.env);
+export const isDev = process.env.NODE_ENV === "development";
 
 export const SYSTEM_NAME =
   process.env.VUE_APP_SYSTEM_NAME || "SPaas 每日一题发布系统";
