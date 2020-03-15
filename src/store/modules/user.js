@@ -6,9 +6,18 @@ const state = {
   avatar_url: ""
 };
 
+async function getUserInfoNoop(access_token) {
+  try {
+    const data = await getUserInfo({ access_token });
+    return data;
+  } catch (error) {
+    return getUserInfoNoop(access_token);
+  }
+}
+
 const actions = {
   async login({ commit }, { username, access_token }) {
-    const data = await getUserInfo({ access_token });
+    const data = await getUserInfoNoop(access_token);
 
     if (data.login !== username) {
       throw new Error("用户名错误");
@@ -23,7 +32,7 @@ const actions = {
     });
   },
   async getUserInfoByToken({ commit }, access_token) {
-    const data = await getUserInfo({ access_token });
+    const data = await getUserInfoNoop(access_token);
 
     localStorage.setItem("access_token", access_token);
 

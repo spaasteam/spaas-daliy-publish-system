@@ -32,9 +32,8 @@
         </el-steps>
       </el-form-item>
       <el-form-item class="btn-wrap" v-if="readyPublish">
-        <el-button
-type="primary"
-:loading="loading" @click="runTask"
+        <el-button type="primary" :loading="loading"
+@click="runTask"
           >发布</el-button
         >
       </el-form-item>
@@ -61,7 +60,6 @@ import {
   createSummaryContent,
   createReadmeContent
 } from "@/common/utils";
-import { Promise } from "q";
 
 const getFileShaAndContent = path =>
   getGithubFile(path).then(({ sha, content }) => ({
@@ -80,7 +78,7 @@ const getLastQuestionNumber = () =>
   }));
 
 // 写汇总文件 为什么要返回 link ? 因为后续需要
-const writeSummaryFile = async ({ gitMessage, title, link, body }) => {
+const writeSummaryFile = async({ gitMessage, title, link, body }) => {
   const summaryPath = "datum/summary.md";
 
   const { content, sha } = await getFileShaAndContent(summaryPath);
@@ -101,7 +99,7 @@ const writeSummaryFile = async ({ gitMessage, title, link, body }) => {
 };
 
 // 写 readme 文件
-const writeReadmeFile = async ({ gitMessage, title, link, body }) => {
+const writeReadmeFile = async({ gitMessage, title, link, body }) => {
   const summaryPath = "README.md";
 
   const { content, sha } = await getFileShaAndContent(summaryPath);
@@ -202,7 +200,7 @@ export default {
       readyPublish.value = false;
     };
 
-    const runTask = async () => {
+    const runTask = async() => {
       loading.value = true;
       for (let i = 0; i < eventList.value.length; i++) {
         const item = eventList.value[i];
