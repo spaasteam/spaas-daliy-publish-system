@@ -1,5 +1,4 @@
 import GitHub from "github-api";
-import { getUserInfo } from "@/services/v1/github";
 
 const state = {
   access_token: "",
@@ -7,15 +6,6 @@ const state = {
   avatar_url: "",
   gh: null
 };
-
-async function getUserInfoNoop(access_token) {
-  try {
-    const data = await getUserInfo({ access_token });
-    return data;
-  } catch (error) {
-    return getUserInfoNoop(access_token);
-  }
-}
 
 const actions = {
   async login({ commit }, { username, access_token }) {
