@@ -1,5 +1,5 @@
-const mdtoc = require('fe-markdown-toc');
-import { postMessage2Group } from '@/services/v1/dingApi';
+const mdtoc = require("fe-markdown-toc");
+import { postMessage2Group } from "@/services/v1/dingApi";
 
 export const encodeBase64 = data => btoa(unescape(encodeURIComponent(data)));
 
@@ -9,7 +9,7 @@ export const decodeBase64 = data => decodeURIComponent(escape(atob(data)));
 export const createSummaryContent = ({ title, body, link, content }) => {
   const newQuestionContent = [title, body, link];
 
-  const questionContent = [content].concat(newQuestionContent).join('\n\n');
+  const questionContent = [content].concat(newQuestionContent).join("\n\n");
 
   return encodeBase64(mdtoc.insert(questionContent)); // 返回可写数据
 };
@@ -18,18 +18,18 @@ export const createSummaryContent = ({ title, body, link, content }) => {
 export const createReadmeContent = ({ title, body, link, content }) => {
   const TITLE = `# spaas-daily-practice\nspaas团队的每日一练，欢迎小伙伴们提交踊跃答案!\n\n`;
 
-  const end_toekn = '<!-- end -->';
+  const end_toekn = "<!-- end -->";
 
   const footerContent = content.slice(content.indexOf(end_toekn));
 
-  const _content = [title, body, link].join('\n\n');
+  const _content = [title, body, link].join("\n\n");
 
-  return encodeBase64([].concat(TITLE, _content, footerContent).join('\n\n'));
+  return encodeBase64([].concat(TITLE, _content, footerContent).join("\n\n"));
 };
 
 export const sendMsg2DingApi = ({ title, text }) => {
   const parmas = {
-    msgtype: 'markdown',
+    msgtype: "markdown",
     markdown: {
       title,
       text
@@ -87,7 +87,7 @@ export function debounce(func, wait = 500, immediate) {
   };
 }
 
-export const START_TIME = new Date('2019 08-27').getTime(); // 27 号开始，应该从 26开始算
+export const START_TIME = new Date("2019 08-27").getTime(); // 27 号开始，应该从 26开始算
 
 const ONE_DAY = 60 * 60 * 1000 * 24;
 const WEEK = 7;
