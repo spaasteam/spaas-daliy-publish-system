@@ -16,7 +16,7 @@ function axiosExtra(axios) {
   ]) {
     axios["$" + method] = function() {
       return this[method].apply(this, arguments).then(res => res && res.data);
-    }
+    };
   }
 }
 

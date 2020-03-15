@@ -1,23 +1,42 @@
 <template>
   <div class="daliy-publish">
     <h2 class="title-wrap">发布题目</h2>
-    <el-form-renderer :content="postContent" ref="form" label-width="60px" class="publish-form" v-loading="readyLoading">
+    <el-form-renderer
+      :content="postContent"
+      ref="form"
+      label-width="60px"
+      class="publish-form"
+      v-loading="readyLoading"
+    >
       <div class="publish-content-mask" v-show="readyPublish"></div>
     </el-form-renderer>
     <el-form-renderer :content="[]">
       <el-form-item class="btn-wrap" v-if="!readyPublish">
-        <el-button type="primary" @click="handleReadyPublish" v-loading="readyLoading">预备发布</el-button>
+        <el-button
+          type="primary"
+          @click="handleReadyPublish"
+          v-loading="readyLoading"
+          >预备发布</el-button
+        >
       </el-form-item>
       <el-form-item v-show="eventList.length">
         <el-steps :active="activeIndex" simple>
-          <el-step v-for="item in eventList" :key="item.title" :title="item.title"></el-step>
+          <el-step
+            v-for="item in eventList"
+            :key="item.title"
+            :title="item.title"
+          ></el-step>
           <!-- <el-step title="步骤 1" icon="el-icon-edit"></el-step>
           <el-step title="步骤 2" icon="el-icon-upload"></el-step>
           <el-step title="步骤 3" icon="el-icon-picture"></el-step>-->
         </el-steps>
       </el-form-item>
       <el-form-item class="btn-wrap" v-if="readyPublish">
-        <el-button type="primary" :loading="loading" @click="runTask">发布</el-button>
+        <el-button
+type="primary"
+:loading="loading" @click="runTask"
+          >发布</el-button
+        >
       </el-form-item>
     </el-form-renderer>
   </div>
@@ -155,7 +174,7 @@ export default {
     const loading = value(false);
     const eventList = value([]);
     const readyPublish = value(false);
-    const readyLoading = value(false)
+    const readyLoading = value(false);
     const activeIndex = value(0);
     const {
       refs,

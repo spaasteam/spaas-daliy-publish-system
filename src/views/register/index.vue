@@ -69,7 +69,7 @@ export default {
           ctx.root.toast("邮箱发送成功");
         }, 500)
       );
-    }
+    };
 
     const hanldeRegister = () => {
       const { form } = ctx.refs;
@@ -87,9 +87,9 @@ export default {
           })
           .finally(() => {
             loading.value = false;
-          })
+          });
       });
-    }
+    };
 
     return {
       registerContent,

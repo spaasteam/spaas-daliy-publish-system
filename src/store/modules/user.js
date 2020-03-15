@@ -46,7 +46,7 @@ const mutations = {
   update(state, payload) {
     Object.entries(payload).forEach(([key, value]) => {
       state[key] = value;
-    })
+    });
   }
 };
 

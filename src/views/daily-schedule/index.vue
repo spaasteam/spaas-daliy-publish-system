@@ -22,26 +22,17 @@
 </template>
 
 <script>
-import { onMounted, value, computed } from "vue-function-api";
+import { onMounted, value } from "vue-function-api";
 import { getUserJson } from "@/services/v1/data.js";
-import { getUser, START_TIME, getRecentDays } from "@/common/utils";
+import { getUser, START_TIME } from "@/common/utils";
 export default {
   setup(props, ctx) {
-    const { $store } = ctx.root;
     const userList = value([]);
-
-    const userInfo = computed(() => $store.getters.user);
 
     onMounted(() => {
       getUserJson().then(data => {
         userList.value = data;
-
-        // const recentData = getRecentDays(data).filter(
-        //   ({ user }) => user && user.account === userInfo.value.username
-        // );
-
-        // console.log(`您最近一天的发题时间为 ： ` + recentData[0].date.toLocaleDateString());
-      })
+      });
     });
 
     const getUserName = date => {

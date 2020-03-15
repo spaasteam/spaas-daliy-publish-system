@@ -1,5 +1,5 @@
-const mdtoc = require("fe-markdown-toc");
-import { postMessage2Group } from "@/services/v1/dingApi";
+const mdtoc = require('fe-markdown-toc');
+import { postMessage2Group } from '@/services/v1/dingApi';
 
 export const encodeBase64 = data => btoa(unescape(encodeURIComponent(data)));
 
@@ -9,27 +9,27 @@ export const decodeBase64 = data => decodeURIComponent(escape(atob(data)));
 export const createSummaryContent = ({ title, body, link, content }) => {
   const newQuestionContent = [title, body, link];
 
-  const questionContent = [content].concat(newQuestionContent).join("\n\n");
+  const questionContent = [content].concat(newQuestionContent).join('\n\n');
 
   return encodeBase64(mdtoc.insert(questionContent)); // 返回可写数据
-}
+};
 
 // 创建 README.md 内容
 export const createReadmeContent = ({ title, body, link, content }) => {
   const TITLE = `# spaas-daily-practice\nspaas团队的每日一练，欢迎小伙伴们提交踊跃答案!\n\n`;
 
-  const end_toekn = "<!-- end -->";
+  const end_toekn = '<!-- end -->';
 
   const footerContent = content.slice(content.indexOf(end_toekn));
 
-  const _content = [title, body, link].join("\n\n");
+  const _content = [title, body, link].join('\n\n');
 
-  return encodeBase64([].concat(TITLE, _content, footerContent).join("\n\n"));
-}
+  return encodeBase64([].concat(TITLE, _content, footerContent).join('\n\n'));
+};
 
 export const sendMsg2DingApi = ({ title, text }) => {
   const parmas = {
-    msgtype: "markdown",
+    msgtype: 'markdown',
     markdown: {
       title,
       text
@@ -39,7 +39,7 @@ export const sendMsg2DingApi = ({ title, text }) => {
     }
   };
   return postMessage2Group(parmas);
-}
+};
 
 /**
  * @description 防抖
@@ -84,10 +84,10 @@ export function debounce(func, wait = 500, immediate) {
     }
 
     return result;
-  }
+  };
 }
 
-export const START_TIME = new Date("2019 08-27").getTime(); // 27 号开始，应该从 26开始算
+export const START_TIME = new Date('2019 08-27').getTime(); // 27 号开始，应该从 26开始算
 
 const ONE_DAY = 60 * 60 * 1000 * 24;
 const WEEK = 7;
@@ -99,12 +99,12 @@ export const generatorDate = (d = new Date()) => {
   const year = d.getFullYear();
 
   return new Date(`${year} ${month}-${day}`);
-}
+};
 
 // 判断是否是周六日
 export const judgeIsWeekEnd = (date = new Date()) => {
   return [0, 6].includes(date.getDay());
-}
+};
 
 export const getUser = (data = [], date = new Date()) => {
   const d = generatorDate(date);
@@ -118,7 +118,7 @@ export const getUser = (data = [], date = new Date()) => {
   const index = (offset - weekDay) % data.length; // data.length 就是安排的周期，除余 得到对应人员
 
   return !judgeIsWeekEnd(date) ? data[index] : null;
-}
+};
 
 export const getRecentDays = (data, date = generatorDate(), days = 30) => {
   const result = [];
@@ -131,4 +131,4 @@ export const getRecentDays = (data, date = generatorDate(), days = 30) => {
     });
   }
   return result;
-}
+};

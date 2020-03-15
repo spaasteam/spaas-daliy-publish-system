@@ -86,22 +86,22 @@ export default {
           })
           .finally(() => {
             loading.value = false;
-          })
+          });
       });
-    }
+    };
 
     const handleListenerEnter = debounce(event => {
       if (event.key !== "Enter") return;
       login();
-    })
+    });
 
     onMounted(() => {
       window.addEventListener("keyup", handleListenerEnter);
-    })
+    });
 
     onBeforeDestroy(() => {
       window.removeEventListener("keyup", handleListenerEnter);
-    })
+    });
 
     return {
       loginContent,

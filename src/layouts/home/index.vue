@@ -1,29 +1,25 @@
 <template>
-  <el-container class="content-main">
-    <el-aside :width="`${sideWidth}px`">
-      <v-menu></v-menu>
-    </el-aside>
-    <el-container>
-      <el-header height="50px">
-        <v-header></v-header>
-      </el-header>
-      <el-main>
+  <div class="main-layout">
+    <sidebar class="sidebar" />
+    <div class="main-content">
+      <v-header height="50px"></v-header>
+      <div class="content">
         <router-view></router-view>
-      </el-main>
-    </el-container>
-  </el-container>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import { computed } from "vue-function-api";
 
 import Header from "./components/header";
-import VMenu from "./components/menu";
+import sidebar from "./components/menu";
 
 export default {
   components: {
     [Header.name]: Header,
-    [VMenu.name]: VMenu
+    [sidebar.name]: sidebar
   },
   setup(props, ctx) {
     const { $store } = ctx.root;
@@ -32,7 +28,7 @@ export default {
 
     const sideWidth = computed(() => {
       return sidebar.value.opened ? 200 : 120;
-    })
+    });
 
     return {
       sidebar,
@@ -43,6 +39,33 @@ export default {
 </script>
 
 <style lang="less">
+.main-layout {
+  height: 100vh;
+  display: flex;
+  // flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+
+  .sidebar {
+    // flex: 0 0 200px;
+    height: 100%;
+  }
+
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .header {
+      flex: 0 0 50px;
+      padding: 0 24px;
+    }
+
+    .content {
+      padding: 24px;
+    }
+  }
+}
 .content-main {
   height: 100%;
   min-height: 100%;
