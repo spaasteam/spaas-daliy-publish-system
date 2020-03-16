@@ -1,5 +1,4 @@
 <template>
-  <!-- <el-scrollbar wrap-class="scrollbar-wrapper"> -->
   <el-menu
     class="menu-container"
     background-color="#2d303b"
@@ -13,13 +12,11 @@
   >
     <menu-item :isCollapse="isCollapse" :menuList="menuList"></menu-item>
   </el-menu>
-  <!-- </el-scrollbar> -->
 </template>
 
 <script>
 import MenuItem from "./menu-item";
 import { computed } from "vue-function-api";
-import { menuList } from "./const";
 
 export default {
   name: "Sidebar",
@@ -27,9 +24,11 @@ export default {
     [MenuItem.name]: MenuItem
   },
   setup(props, ctx) {
-    const { $store, $route, $router } = ctx.root;
-    console.log($route, $router);
+    const { $store } = ctx.root;
+
     const isCollapse = computed(() => !$store.getters.sidebar.opened);
+    const menuList = computed(() => $store.getters.menuList);
+
     return {
       menuList,
       isCollapse

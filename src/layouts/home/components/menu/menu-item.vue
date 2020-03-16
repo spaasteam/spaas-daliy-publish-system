@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div v-for="m in menuList" :key="m.id" class="menu-item">
+    <div v-for="m in menuList" :key="m.name" class="menu-item">
       <el-menu-item :index="m.path" v-if="!m.children">
         <icon-font :icon="m.icon"></icon-font>
         <span slot="title" class="item-title">{{ m.name }}</span>
       </el-menu-item>
 
-      <el-submenu v-else :index="m.id + ''">
+      <el-submenu v-else :index="m.name + ''">
         <template slot="title">
           <i class="el-icon-menu"></i>
           <svg-icon v-if="m.icon" :icon-class="m.icon"></svg-icon>

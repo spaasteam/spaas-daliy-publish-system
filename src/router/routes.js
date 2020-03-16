@@ -1,4 +1,5 @@
 import Layout from "@/layouts/home";
+
 export default [
   {
     path: "/",
@@ -18,7 +19,8 @@ export default [
     name: "daliy-publish",
     component: Layout,
     meta: {
-      title: "每日一题"
+      title: "每日一题",
+      icon: "el-icon-menu"
     },
     redirect: "/daliy-publish/index",
     children: [

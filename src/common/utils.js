@@ -1,4 +1,5 @@
 const mdtoc = require("fe-markdown-toc");
+
 import { postMessage2Group } from "@/services/v1/dingApi";
 
 export const encodeBase64 = data => btoa(unescape(encodeURIComponent(data)));
@@ -86,49 +87,21 @@ export function debounce(func, wait = 500, immediate) {
     return result;
   };
 }
+export function routeHandler(routes, paths = []) {
+  return routes.reduce((acc, route) => {
+    if (route.children && route.children.length) {
+      route.children = routeHandler(route.children, [].concat(route.path));
+    }
 
-export const START_TIME = new Date("2019 08-27").getTime(); // 27 号开始，应该从 26开始算
+    if (!route.hidden) {
+      acc.push({
+        name: route.meta.title,
+        icon: route.meta.icon,
+        path: paths.concat([route.path]).join("/"),
+        children: route.children
+      });
+    }
 
-const ONE_DAY = 60 * 60 * 1000 * 24;
-const WEEK = 7;
-const REPAIR_DAY = 3; // 要计算到周，但是我们是从周三开始的，所以加上
-
-export const generatorDate = (d = new Date()) => {
-  const day = d.getDate();
-  const month = d.getMonth() + 1;
-  const year = d.getFullYear();
-
-  return new Date(`${year} ${month}-${day}`);
-};
-
-// 判断是否是周六日
-export const judgeIsWeekEnd = (date = new Date()) => {
-  return [0, 6].includes(date.getDay());
-};
-
-export const getUser = (data = [], date = new Date()) => {
-  const d = generatorDate(date);
-
-  const endTime = d.getTime();
-
-  const offset = (endTime - START_TIME) / ONE_DAY;
-
-  const weekDay = Math.floor((offset + REPAIR_DAY) / WEEK) * 2; // 需要减去的周末天数
-
-  const index = (offset - weekDay) % data.length; // data.length 就是安排的周期，除余 得到对应人员
-
-  return !judgeIsWeekEnd(date) ? data[index] : null;
-};
-
-export const getRecentDays = (data, date = generatorDate(), days = 30) => {
-  const result = [];
-  const start = date.getTime();
-  for (let i = 0; i < days; i++) {
-    const d = new Date(start + i * ONE_DAY);
-    result.push({
-      date: d,
-      user: getUser(data, d)
-    });
-  }
-  return result;
-};
+    return acc;
+  }, []);
+}

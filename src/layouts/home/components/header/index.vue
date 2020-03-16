@@ -75,6 +75,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   height: 100%;
+  border-bottom: 1px solid #efefef;
 
   .left-panel {
     > .menu-icon {

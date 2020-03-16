@@ -1,7 +1,12 @@
+import cloneDeep from "lodash/cloneDeep";
+import routes from "@/router/routes";
+import { routeHandler } from "@/common/utils";
+
 const state = {
   sidebar: {
     opened: true
-  }
+  },
+  menuList: routeHandler(cloneDeep(routes))
 };
 
 const mutations = {
