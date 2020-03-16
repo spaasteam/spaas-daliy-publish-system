@@ -1,6 +1,6 @@
 <template>
   <div class="login-page fillcontain">
-    <h1 class="title">{{ SYSTEM_NAME }}</h1>
+    <h1 class="title">{{ APP_NAME }}</h1>
 
     <!-- 登陆 -->
     <div class="login-panel">
@@ -23,7 +23,7 @@
 <script>
 import { value, onMounted, onBeforeDestroy } from "vue-function-api";
 
-import { SYSTEM_NAME } from "@/common/const";
+import { APP_NAME } from "@/common/const";
 
 import { debounce } from "@/common/utils";
 
@@ -107,7 +107,7 @@ export default {
       loginContent,
       login,
       loading,
-      SYSTEM_NAME
+      APP_NAME
     };
   }
 };
