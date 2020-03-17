@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="m in menuList" :key="m.name" class="menu-item">
-      <el-menu-item :index="m.path" v-if="!m.children">
+      <el-menu-item :index="m.path" v-if="!m.children || !m.children.length">
         <icon-font :icon="m.icon"></icon-font>
         <span slot="title" class="item-title">{{ m.name }}</span>
       </el-menu-item>

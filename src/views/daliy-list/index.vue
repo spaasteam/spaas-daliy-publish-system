@@ -1,23 +1,45 @@
 <template>
   <div class="daliy-questions">
     <div class="daliy-questions-header">
-      <el-form-renderer
-        :content="content"
-        v-model="searchData"
-        ref="form"
-        inline
-      >
-        <el-form-item label="">
-          <el-button type="primary" @click="getQuestionList">搜索</el-button>
+      <el-form inline>
+        <el-form-item label="标题关键字">
+          <el-input
+            v-model="searchData.keyword"
+            placeholder="请输入关键字"
+            clearable
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="排序">
+          <el-button
+            @click="searchData.sort = !searchData.sort"
+            :icon="`el-icon-caret-${searchData.sort ? 'top' : 'bottom'}`"
+            >{{ searchData.sort ? "正" : "倒" }}序</el-button
+          >
+        </el-form-item>
+        <el-form-item label="根据标签过滤">
+          <el-select
+            v-model="searchData.labels"
+            placeholder="请选择标签"
+            clearable
+          >
+            <el-option
+              v-for="item in labelList"
+              :key="item.name"
+              :value="item.value"
+              :label="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
           <el-button @click="resetSearch">重置</el-button>
         </el-form-item>
-      </el-form-renderer>
+      </el-form>
     </div>
     <div class="daliy-questions-content" v-loading="listLoading">
       <ul class="daliy-questions-content-list">
         <li
           class="daliy-questions-content-list-item"
-          v-for="item in list"
+          v-for="item in computedList"
           :key="item.node_id"
         >
           <router-link :to="`${$route.path}/${item.id}`">{{
@@ -31,36 +53,34 @@
 
 <script>
 import github from "@/common/github-api";
-import { onMounted, value } from "vue-function-api";
+import { onMounted, value, computed } from "vue-function-api";
 
 export default {
   name: "DaliyList",
   setup(props, ctx) {
     const list = value([]);
     const listLoading = value(false);
+    const labelList = value([]);
     const searchData = value({
-      labels: [],
+      labels: "",
       keyword: "",
-      sort: ""
+      sort: false
     });
 
     onMounted(() => {
       getQuestionList();
+      getLabelList();
     });
 
     const getQuestionList = async () => {
       listLoading.value = true;
-      const params = {
-        ...searchData.value,
-        state: "open",
-        labels: searchData.value.labels.join(",")
-      };
 
       try {
-        const { data } = await github.getIssueList(params);
-        list.value = data.filter(item =>
-          item.title.includes(params.keyword || "")
-        );
+        const { data } = await github.getIssueList({ state: "open" });
+        list.value = data.map(item => ({
+          ...item,
+          labels: item.labels.map(v => v.name).join(",")
+        }));
       } catch (error) {
         console.log(error);
       } finally {
@@ -68,18 +88,35 @@ export default {
       }
     };
 
+    const getLabelList = async () => {
+      const { data } = await github.getLabelList();
+
+      labelList.value = data.map(({ name }) => ({ value: name, label: name }));
+    };
+
+    const computedList = computed(() => {
+      const { keyword, sort, labels } = searchData.value;
+
+      const content = list.value
+        .filter(item => item.title.includes(keyword))
+        .filter(item => item.labels.includes(labels));
+
+      return !sort ? content : content.reverse();
+    });
+
     const resetSearch = () => {
       searchData.value = {
-        labels: [],
+        labels: "",
         keyword: "",
-        sort: ""
+        sort: false
       };
-      getQuestionList();
     };
 
     return {
       list,
       listLoading,
+      labelList,
+      computedList,
       content: [
         {
           id: "keyword",

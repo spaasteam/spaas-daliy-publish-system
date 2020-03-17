@@ -46,7 +46,18 @@ export default [
         meta: {
           title: "题目列表"
         },
-        component: () => import("@/views/daliy-list")
+        component: () => import("@/views/daliy-list"),
+        children: [
+          {
+            path: ":id",
+            name: "daliyDetail",
+            hidden: true,
+            meta: {
+              tilte: "题目详情"
+            },
+            component: () => import("@/views/daliy-detail")
+          }
+        ]
       }
     ]
   },
