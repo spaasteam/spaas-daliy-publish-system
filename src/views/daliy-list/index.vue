@@ -42,9 +42,13 @@
           v-for="item in computedList"
           :key="item.node_id"
         >
-          <router-link :to="`${$route.path}/${item.id}`">{{
-            item.title
-          }}</router-link>
+          <router-link
+            :to="{
+              path: `/daliy-publish/daliy-detail`,
+              query: { id: item.id }
+            }"
+            >{{ item.title }}</router-link
+          >
         </li>
       </ul>
     </div>
