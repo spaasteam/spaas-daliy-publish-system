@@ -63,6 +63,7 @@ export default {
 
     .content {
       padding: 24px;
+      height: calc(100vh - 50px - 24px);
     }
   }
 }

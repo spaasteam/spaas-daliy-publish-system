@@ -769,13 +769,21 @@
   dependencies:
     lodash.get "^4.4.2"
 
-"@femessage/el-form-renderer@^1.11.2":
-  version "1.11.2"
-  resolved "https://registry.npm.taobao.org/@femessage/el-form-renderer/download/@femessage/el-form-renderer-1.11.2.tgz?cache=0&sync_timestamp=1566206825738&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40femessage%2Fel-form-renderer%2Fdownload%2F%40femessage%2Fel-form-renderer-1.11.2.tgz#bcd209fa3f9057de6463d91aa71b052219764eaa"
-  integrity sha1-vNIJ+j+QV95kY9kapxsFIhl2Tqo=
+"@femessage/el-form-renderer@^1.14.6":
+  version "1.14.6"
+  resolved "https://registry.npm.taobao.org/@femessage/el-form-renderer/download/@femessage/el-form-renderer-1.14.6.tgz#e7e1027e44ab00e5d5cade9d8436b86d0a8da593"
+  integrity sha1-5+ECfkSrAOXVyt6dhDa4bQqNpZM=
   dependencies:
+    lodash.clonedeep "^4.5.0"
+    lodash.frompairs "^4.0.1"
     lodash.get "^4.4.2"
+    lodash.has "^4.5.2"
+    lodash.includes "^4.3.0"
+    lodash.isequal "^4.5.0"
+    lodash.isplainobject "^4.0.6"
+    lodash.kebabcase "^4.1.1"
     lodash.set "^4.3.2"
+    lodash.topairs "^4.3.0"
 
 "@hapi/address@2.x.x":
   version "2.0.0"
@@ -5426,15 +5434,45 @@ locate-path@^3.0.0:
     p-locate "^3.0.0"
     path-exists "^3.0.0"
 
+lodash.clonedeep@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.npm.taobao.org/lodash.clonedeep/download/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+  integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
+
 lodash.defaultsdeep@^4.6.1:
   version "4.6.1"
   resolved "https://registry.npm.taobao.org/lodash.defaultsdeep/download/lodash.defaultsdeep-4.6.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flodash.defaultsdeep%2Fdownload%2Flodash.defaultsdeep-4.6.1.tgz#512e9bd721d272d94e3d3a63653fa17516741ca6"
   integrity sha1-US6b1yHSctlOPTpjZT+hdRZ0HKY=
 
+lodash.frompairs@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npm.taobao.org/lodash.frompairs/download/lodash.frompairs-4.0.1.tgz#bc4e5207fa2757c136e573614e9664506b2b1bd2"
+  integrity sha1-vE5SB/onV8E25XNhTpZkUGsrG9I=
+
 lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.npm.taobao.org/lodash.get/download/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
+
+lodash.has@^4.5.2:
+  version "4.5.2"
+  resolved "https://registry.npm.taobao.org/lodash.has/download/lodash.has-4.5.2.tgz#d19f4dc1095058cccbe2b0cdf4ee0fe4aa37c862"
+  integrity sha1-0Z9NwQlQWMzL4rDN9O4P5Ko3yGI=
+
+lodash.includes@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.npm.taobao.org/lodash.includes/download/lodash.includes-4.3.0.tgz#60bb98a87cb923c68ca1e51325483314849f553f"
+  integrity sha1-YLuYqHy5I8aMoeUTJUgzFISfVT8=
+
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.npm.taobao.org/lodash.isequal/download/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
+
+lodash.isplainobject@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.npm.taobao.org/lodash.isplainobject/download/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
+  integrity sha1-fFJqUtibRcRcxpC4gWO+BJf1UMs=
 
 lodash.kebabcase@^4.1.1:
   version "4.1.1"
@@ -5455,6 +5493,11 @@ lodash.set@^4.3.2:
   version "4.3.2"
   resolved "https://registry.npm.taobao.org/lodash.set/download/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
   integrity sha1-2HV7HagH3eJIFrDWqEvqGnYjCyM=
+
+lodash.topairs@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.npm.taobao.org/lodash.topairs/download/lodash.topairs-4.3.0.tgz#3b6deaa37d60fb116713c46c5f17ea190ec48d64"
+  integrity sha1-O23qo31g+xFnE8RsXxfqGQ7EjWQ=
 
 lodash.transform@^4.6.0:
   version "4.6.0"

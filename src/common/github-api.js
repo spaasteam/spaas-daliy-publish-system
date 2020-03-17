@@ -77,6 +77,10 @@ class GitHub {
   deleteLabel(name) {
     return this.issue.deleteLabel(name);
   }
+
+  getIssueList(params) {
+    return this.issue.listIssues(params);
+  }
 }
 
 export default new GitHub();
