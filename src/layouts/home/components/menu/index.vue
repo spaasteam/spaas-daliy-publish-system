@@ -58,6 +58,6 @@ export default {
   }
 }
 .menu-container {
-  overflow: hidden;
+  overflow-y: hidden;
 }
 </style>

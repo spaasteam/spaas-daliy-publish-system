@@ -69,7 +69,11 @@ export default {
     };
 
     const resetSearch = () => {
-      searchData.value = {};
+      searchData.value = {
+        labels: [],
+        keyword: "",
+        sort: ""
+      };
       getQuestionList();
     };
 
@@ -143,7 +147,7 @@ export default {
 
   &-content {
     padding: 20px;
-    height: 100%;
+    height: calc(100% - 80px);
     overflow: scroll;
     &-list {
       &-item {
