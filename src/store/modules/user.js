@@ -1,4 +1,4 @@
-import GitHub from "github-api";
+import github from "@/common/github-api";
 
 const state = {
   access_token: "",
@@ -8,26 +8,23 @@ const state = {
 };
 
 const actions = {
-  async login({ commit }, { username, access_token }) {
-    const gh = new GitHub({ token: access_token });
-    const userHandle = gh.getUser();
-
-    const { data } = await userHandle.getProfile();
+  async login({ commit }, { access_token }) {
+    const { data } = await github
+      .initGithubInstance(access_token)
+      .getUserInfo();
 
     localStorage.setItem("access_token", access_token);
 
     commit("update", {
       access_token,
       username: data.login,
-      avatar_url: data.avatar_url,
-      gh
+      avatar_url: data.avatar_url
     });
   },
   async getUserInfoByToken({ commit }, access_token) {
-    const gh = new GitHub({ token: access_token });
-    const userHandle = gh.getUser();
-
-    const { data } = await userHandle.getProfile();
+    const { data } = await github
+      .initGithubInstance(access_token)
+      .getUserInfo();
 
     localStorage.setItem("access_token", access_token);
 

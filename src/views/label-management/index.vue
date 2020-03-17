@@ -22,6 +22,7 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column label="描述" prop="description"></el-table-column>
       <el-table-column label="操作">
         <template v-slot="{ row }">
           <div class="opertion-main">
@@ -45,14 +46,10 @@
 
 <script>
 import { value, onMounted, computed } from "vue-function-api";
-import {
-  getlabelList,
-  postLabel,
-  deleteLabel,
-  patchLabel
-} from "@/services/v1/github";
 import clipboard from "@/directive/clipboard/index.js";
 import LoadingDialog from "@/components/loading-dialog";
+
+import github from "@/common/github-api";
 
 export default {
   directives: {
@@ -73,7 +70,8 @@ export default {
 
     const getList = async () => {
       loading.value = true;
-      list.value = await getlabelList();
+      const { data } = await github.getLabelList();
+      list.value = data;
       loading.value = false;
     };
 
@@ -100,7 +98,8 @@ export default {
       $nextTick(() => {
         refs.form.updateForm({
           color: `#${row.color}`,
-          name: row.anme
+          name: row.name,
+          description: row.description
         });
       });
     };
@@ -110,7 +109,7 @@ export default {
         title: "删除提示",
         text: "确定要删除该标签吗?",
         confirm: () =>
-          deleteLabel(row.name).then(() => {
+          github.deleteLabel(row.name).then(() => {
             toast("操作成功");
             getList();
           })
@@ -126,13 +125,10 @@ export default {
       };
 
       const promise = labelEdit.value
-        ? patchLabel({
-            ...params,
-            currentName: oldName
-          })
-        : postLabel(params);
+        ? () => github.updateLabel(oldName, params)
+        : () => github.postLabel(params);
 
-      return promise.then(() => {
+      return promise().then(() => {
         toast("操作成功");
         getList();
         dialogVisible.value = false;
@@ -178,6 +174,12 @@ export default {
           label: "颜色",
           type: "colorPicker",
           default: "#000000"
+        },
+        {
+          id: "description",
+          label: "描述",
+          type: "input",
+          default: ""
         }
       ],
       dialogVisible,

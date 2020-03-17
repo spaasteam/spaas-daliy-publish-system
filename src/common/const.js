@@ -10,3 +10,5 @@ export const OWNER = process.env.VUE_APP_GITHUB_OWNER;
 
 // 仓库名字
 export const REPO_NAME = process.env.VUE_APP_GITHUB_REPO_NAME;
+
+export const REPOSITORY = `${OWNER}/${REPO_NAME}`;

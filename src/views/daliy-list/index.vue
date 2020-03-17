@@ -3,7 +3,12 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "DaliyList",
+  setup(props, ctx) {
+    return {};
+  }
+};
 </script>
 
 <style></style>
