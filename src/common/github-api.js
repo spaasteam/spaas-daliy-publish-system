@@ -81,6 +81,14 @@ class GitHub {
   getIssueList(params) {
     return this.issue.listIssues(params);
   }
+
+  getIssue(id) {
+    return this.issue.getIssue(id);
+  }
+
+  getIssueContent(id) {
+    return this.issue.listIssueComments(id);
+  }
 }
 
 export default new GitHub();

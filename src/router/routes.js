@@ -1,5 +1,4 @@
 import Layout from "@/layouts/home";
-import Empty from "@/layouts/empty";
 
 export default [
   {

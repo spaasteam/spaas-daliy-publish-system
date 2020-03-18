@@ -45,7 +45,7 @@
           <router-link
             :to="{
               path: `/daliy-publish/daliy-detail`,
-              query: { id: item.id }
+              query: { id: item.number }
             }"
             >{{ item.title }}</router-link
           >
@@ -117,58 +117,9 @@ export default {
     };
 
     return {
-      list,
       listLoading,
       labelList,
       computedList,
-      content: [
-        {
-          id: "keyword",
-          label: "题目关键字",
-          default: "",
-          type: "input",
-          el: {
-            placeholder: "请输入题目关键字"
-          }
-        },
-        {
-          type: "select",
-          label: "排序",
-          id: "sort",
-          default: "",
-          el: {
-            clearable: true
-          },
-          options: [
-            {
-              label: "根据创建时间",
-              value: "created"
-            },
-            {
-              label: "根据更新时间",
-              value: "updated"
-            }
-          ]
-        },
-        {
-          id: "labels",
-          type: "select",
-          label: "标签",
-          default: [],
-          el: {
-            multiple: true
-          },
-          remote: {
-            async request() {
-              const { data } = await github.getLabelList();
-              return data.map(v => ({
-                label: v.name,
-                value: v.name
-              }));
-            }
-          }
-        }
-      ],
       searchData,
 
       // methods

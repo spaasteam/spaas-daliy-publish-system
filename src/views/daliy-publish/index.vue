@@ -78,7 +78,7 @@ const getLastQuestionNumber = () =>
   }));
 
 // 写汇总文件 为什么要返回 link ? 因为后续需要
-const writeSummaryFile = async({ gitMessage, title, link, body }) => {
+const writeSummaryFile = async ({ gitMessage, title, link, body }) => {
   const summaryPath = "datum/summary.md";
 
   const { content, sha } = await getFileShaAndContent(summaryPath);
@@ -99,7 +99,7 @@ const writeSummaryFile = async({ gitMessage, title, link, body }) => {
 };
 
 // 写 readme 文件
-const writeReadmeFile = async({ gitMessage, title, link, body }) => {
+const writeReadmeFile = async ({ gitMessage, title, link, body }) => {
   const summaryPath = "README.md";
 
   const { content, sha } = await getFileShaAndContent(summaryPath);
@@ -200,7 +200,7 @@ export default {
       readyPublish.value = false;
     };
 
-    const runTask = async() => {
+    const runTask = async () => {
       loading.value = true;
       for (let i = 0; i < eventList.value.length; i++) {
         const item = eventList.value[i];
