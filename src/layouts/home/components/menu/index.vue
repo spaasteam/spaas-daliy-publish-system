@@ -40,8 +40,10 @@ export default {
 <style lang="less">
 .el-menu {
   width: 200px;
+  flex: 0 0 200px;
   &--collapse {
     width: 64px;
+    flex: 0 0 64px;
     .el-submenu__icon-arrow,
     .sub-menu-title,
     .menu-title {

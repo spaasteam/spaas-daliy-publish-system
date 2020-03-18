@@ -42,12 +42,11 @@ export default {
 .main-layout {
   height: 100vh;
   display: flex;
-  // flex-direction: column;
+
   justify-content: space-between;
   overflow: hidden;
 
   .sidebar {
-    // flex: 0 0 200px;
     height: 100%;
   }
 
@@ -67,21 +66,7 @@ export default {
     }
   }
 }
-.content-main {
-  height: 100%;
-  min-height: 100%;
 
-  .el-scrollbar {
-    height: 100%;
-    .el-scrollbar__wrap {
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
-  }
-  .el-menu {
-    border-right: none;
-  }
-}
 .el-header {
   border-bottom: 1px solid #efefef;
 }
