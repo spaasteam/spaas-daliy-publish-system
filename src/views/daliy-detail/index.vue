@@ -1,6 +1,14 @@
 <template>
   <div class="daliy-detail-page" v-loading="loading">
-    <h1 @click="handleGo2Github">{{ issueData.title }}</h1>
+    <div class="daliy-detail-page-header">
+      <h1 @click="handleGo2Github">
+        {{ issueData.title }}
+      </h1>
+
+      <span class="time-text"
+        >创建时间: {{ dateFormat(issueData.created_at) }}</span
+      >
+    </div>
     <div class="comemnt-content">
       <comment-card
         v-for="data in issueData.comments"
@@ -46,7 +54,6 @@ export default {
               ...comments.map(v => ({ ...v, type: "commented" }))
             ]
           };
-          console.log(issueData);
         })
         .finally(() => {
           loading.value = false;
@@ -71,17 +78,29 @@ export default {
 <style lang="less">
 .daliy-detail-page {
   height: 100%;
+  &-header {
+    position: relative;
+    height: 30px;
+    > h1 {
+      cursor: pointer;
 
-  > h1 {
-    cursor: pointer;
-    font-size: 18px;
-    &:hover {
-      color: #1890ff;
-      text-decoration: underline;
+      font-size: 18px;
+      &:hover {
+        color: #1890ff;
+        text-decoration: underline;
+      }
+    }
+    .time-text {
+      margin-top: 5px;
+      font-size: 12px;
+      display: block;
+      color: #999;
     }
   }
   .comemnt-content {
     margin-top: 20px;
+    height: calc(100% - 30px);
+    overflow: auto;
   }
 }
 </style>
