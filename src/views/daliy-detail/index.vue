@@ -5,7 +5,8 @@
         {{ issueData.title }}
       </h1>
 
-      <span class="time-text"
+      <span
+class="time-text"
         >创建时间: {{ dateFormat(issueData.created_at) }}</span
       >
     </div>
@@ -16,12 +17,6 @@
         :data="data"
       ></comment-card>
     </div>
-    <!-- v-if="issueData.comments.length" -->
-    <!-- <mavonEditor
-      class="style-show"
-      ref="mavonEditor"
-      :v-model="content"
-    ></mavonEditor> -->
   </div>
 </template>
 
@@ -73,7 +68,6 @@ export default {
     return {
       issueData,
       loading,
-      content: "```js\nconst a = true;\nconst b = { name: 'ccc' }\n```",
 
       // methods
       handleGo2Github
