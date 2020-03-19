@@ -16,6 +16,12 @@
         :data="data"
       ></comment-card>
     </div>
+    <!-- v-if="issueData.comments.length" -->
+    <!-- <mavonEditor
+      class="style-show"
+      ref="mavonEditor"
+      :v-model="content"
+    ></mavonEditor> -->
   </div>
 </template>
 
@@ -67,6 +73,7 @@ export default {
     return {
       issueData,
       loading,
+      content: "```js\nconst a = true;\nconst b = { name: 'ccc' }\n```",
 
       // methods
       handleGo2Github
@@ -100,7 +107,13 @@ export default {
   .comemnt-content {
     margin-top: 20px;
     height: calc(100% - 30px);
+    min-height: calc(100% - 30px);
     overflow: auto;
+  }
+  .style-show {
+    position: fixed;
+    left: 9999px;
+    top: 9999px;
   }
 }
 </style>

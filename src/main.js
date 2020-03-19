@@ -14,13 +14,13 @@ Vue.use(ElementUI);
 Vue.use(plugin);
 Vue.component(ElFormRenderer.name, ElFormRenderer);
 
-import VueHighlightJS from "vue-highlightjs";
+// import VueHighlightJS from "vue-highlightjs";
 
 // Tell Vue.js to use vue-highlightjs
-Vue.use(VueHighlightJS);
+// Vue.use(VueHighlightJS);
 Vue.config.productionTip = false;
-Vue.config.devtools = process.env.NODE_ENV === "development";
-
+// Vue.config.devtools = process.env.NODE_ENV === "development";
+Vue.config.devtools = true;
 new Vue({
   router,
   store,
