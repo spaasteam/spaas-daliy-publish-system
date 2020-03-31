@@ -1,6 +1,6 @@
 {
-  "name": "client",
-  "version": "0.1.0",
+  "name": "daliy-publish-system",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "yarn serve && yarn start:lambda",
