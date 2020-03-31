@@ -7,6 +7,21 @@
 ![img](./photo/example.png)
 
 
+## 功能预览
+
+发题预备
+![img](./photo/发题预备.png)
+
+预备发布
+![img](./photo/预备发布.png)
+
+标签管理
+![img](./photo/标签管理.png)
+
+
+题目详情
+![img](./photo/题目详情.png)
+
 ## 如何运行
 
 ```js
