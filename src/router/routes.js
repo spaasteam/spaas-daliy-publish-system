@@ -56,15 +56,15 @@ export default [
           tilte: "题目详情"
         },
         component: () => import("@/views/daliy-detail")
-      },
-      {
-        path: "daliy-record",
-        name: "daliyRecord",
-        meta: {
-          title: "发题记录"
-        },
-        component: () => import("@/views/daliy-record")
       }
+      // {
+      //   path: "daliy-record",
+      //   name: "daliyRecord",
+      //   meta: {
+      //     title: "发题记录"
+      //   },
+      //   component: () => import("@/views/daliy-record")
+      // }
     ]
   },
   {

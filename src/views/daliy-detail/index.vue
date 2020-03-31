@@ -1,12 +1,9 @@
 <template>
   <div class="daliy-detail-page" v-loading="loading">
     <div class="daliy-detail-page-header">
-      <h1 @click="handleGo2Github">
-        {{ issueData.title }}
-      </h1>
+      <h1 @click="handleGo2Github">{{ issueData.title }}</h1>
 
-      <span
-class="time-text"
+      <span class="time-text"
         >创建时间: {{ dateFormat(issueData.created_at) }}</span
       >
     </div>

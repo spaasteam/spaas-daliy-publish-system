@@ -1,4 +1,5 @@
 const mdtoc = require("fe-markdown-toc");
+import { APP_NAME } from "./const";
 
 import { postMessage2Group } from "@/services/v1/dingApi";
 
@@ -17,7 +18,7 @@ export const createSummaryContent = ({ title, body, link, content }) => {
 
 // 创建 README.md 内容
 export const createReadmeContent = ({ title, body, link, content }) => {
-  const TITLE = `# spaas-daily-practice\nspaas团队的每日一练，欢迎小伙伴们提交踊跃答案!\n\n`;
+  const TITLE = `# ${APP_NAME}\n每日一练，欢迎小伙伴们提交踊跃答案!\n\n`;
 
   const end_toekn = "<!-- end -->";
 

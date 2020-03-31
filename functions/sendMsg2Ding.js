@@ -8,7 +8,7 @@ exports.handler = function(event, context, callback) {
   const payload = {
     msgtype: "markdown",
     markdown: {
-      title: data.title,
+      title: `每日一题提醒: ${data.title} 题目发布了`,
       text: `#### ${data.title}\n` + `> ${data.text}\n`
     },
     at: {

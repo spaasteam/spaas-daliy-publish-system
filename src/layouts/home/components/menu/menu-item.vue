@@ -9,7 +9,6 @@
       <el-submenu v-else :index="m.name + ''">
         <template slot="title">
           <i class="el-icon-menu"></i>
-          <svg-icon v-if="m.icon" :icon-class="m.icon"></svg-icon>
           <span class="sub-menu-title">{{ m.name }}</span>
         </template>
         <menu-item :menuList="m.children"></menu-item>

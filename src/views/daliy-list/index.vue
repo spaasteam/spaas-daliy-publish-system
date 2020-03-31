@@ -36,7 +36,7 @@
       </el-form>
     </div>
     <div class="daliy-questions-content" v-loading="listLoading">
-      <ul class="daliy-questions-content-list">
+      <ul class="daliy-questions-content-list" v-if="computedList.length">
         <li
           class="daliy-questions-content-list-item"
           v-for="item in computedList"
@@ -51,6 +51,16 @@
           >
         </li>
       </ul>
+      <div class="no-data" v-else>
+        <span
+          >仓库空空的，快去<el-button
+            type="text"
+            style="margin: 0 5px"
+            @click="$router.push('/daliy-publish/index')"
+            >发布题目</el-button
+          >吧</span
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -61,7 +71,7 @@ import { onMounted, value, computed } from "vue-function-api";
 
 export default {
   name: "DaliyList",
-  setup(props, ctx) {
+  setup() {
     const list = value([]);
     const listLoading = value(false);
     const labelList = value([]);
@@ -138,9 +148,20 @@ export default {
   }
 
   &-content {
+    position: relative;
     padding: 20px;
     height: calc(100% - 80px);
     overflow: scroll;
+    .no-data {
+      background: #fff;
+      text-align: center;
+      > span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
     &-list {
       &-item {
         > a {
