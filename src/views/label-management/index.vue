@@ -126,7 +126,7 @@ export default {
 
       const promise = labelEdit.value
         ? () => github.updateLabel(oldName, params)
-        : () => github.postLabel(params);
+        : () => github.createLabel(params);
 
       return promise().then(() => {
         toast("操作成功");
