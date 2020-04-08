@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Message } from "element-ui";
 import store from "@/store";
-import router from "@/router";
+import router from "@/router/routes";
 
 function axiosExtra(axios) {
   for (const method of [
@@ -16,7 +16,7 @@ function axiosExtra(axios) {
   ]) {
     axios["$" + method] = function() {
       return this[method].apply(this, arguments).then(res => res && res.data);
-    }
+    };
   }
 }
 

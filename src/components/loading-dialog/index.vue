@@ -114,7 +114,7 @@ export default {
       Promise.resolve(this.beforeClose()).then(flag => {
         if (!flag) return;
         this.handleClose();
-      })
+      });
     },
     handleClose() {
       /**
@@ -140,7 +140,7 @@ export default {
         .catch(e => console.log(e))
         .finally(() => {
           this.btnLoading = false;
-        })
+        });
     }
   }
 };

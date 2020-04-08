@@ -1,11 +1,15 @@
 export const DING_TOKEN = process.env.DING_TOKEN;
 
-export const SYSTEM_NAME = "SPaas 每日一题发布系统";
+export const isDev = process.env.NODE_ENV === "development";
+
+export const APP_NAME = process.env.VUE_APP_APP_NAME || "每日一题发布系统";
 
 // 仓库 owner
-export const OWNER = "spaasteam";
-// export const OWNER = "cjfff";
+export const OWNER = process.env.VUE_APP_GITHUB_OWNER;
 
 // 仓库名字
-export const REPO_NAME = "spaas-daily-practice";
-// export const REPO_NAME = "node-music";
+export const REPO_NAME = process.env.VUE_APP_GITHUB_REPO_NAME;
+
+export const REPOSITORY = `${OWNER}/${REPO_NAME}`;
+
+export const issue_link_prefix = `https://github.com/${REPOSITORY}/issues`;

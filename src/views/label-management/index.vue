@@ -22,6 +22,7 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column label="描述" prop="description"></el-table-column>
       <el-table-column label="操作">
         <template v-slot="{ row }">
           <div class="opertion-main">
@@ -45,14 +46,10 @@
 
 <script>
 import { value, onMounted, computed } from "vue-function-api";
-import {
-  getlabelList,
-  postLabel,
-  deleteLabel,
-  patchLabel
-} from "@/services/v1/github";
 import clipboard from "@/directive/clipboard/index.js";
 import LoadingDialog from "@/components/loading-dialog";
+
+import github from "@/common/github-api";
 
 export default {
   directives: {
@@ -73,9 +70,10 @@ export default {
 
     const getList = async () => {
       loading.value = true;
-      list.value = await getlabelList();
+      const { data } = await github.getLabelList();
+      list.value = data;
       loading.value = false;
-    }
+    };
 
     const clipboardSuccess = () => toast("复制成功");
 
@@ -89,8 +87,8 @@ export default {
           name: ""
         });
         refs.form.clearValidate && refs.form.clearValidate();
-      })
-    }
+      });
+    };
 
     const handleEdit = row => {
       oldName = row.name;
@@ -100,22 +98,23 @@ export default {
       $nextTick(() => {
         refs.form.updateForm({
           color: `#${row.color}`,
-          name: row.anme
+          name: row.name,
+          description: row.description
         });
-      })
-    }
+      });
+    };
 
     const handleDelete = row => {
       $loadingConfirm({
         title: "删除提示",
         text: "确定要删除该标签吗?",
         confirm: () =>
-          deleteLabel(row.name).then(() => {
+          github.deleteLabel(row.name).then(() => {
             toast("操作成功");
             getList();
           })
       });
-    }
+    };
 
     const handleValidateForm = async () => {
       const data = await validateForm(refs.form);
@@ -126,22 +125,19 @@ export default {
       };
 
       const promise = labelEdit.value
-        ? patchLabel({
-            ...params,
-            currentName: oldName
-          })
-        : postLabel(params);
+        ? () => github.updateLabel(oldName, params)
+        : () => github.createLabel(params);
 
-      return promise.then(() => {
+      return promise().then(() => {
         toast("操作成功");
         getList();
         dialogVisible.value = false;
-      })
-    }
+      });
+    };
 
     onMounted(() => {
       getList();
-    })
+    });
 
     const labelTitle = computed(() =>
       labelEdit.value ? "编辑标签" : "新增标签"
@@ -178,6 +174,12 @@ export default {
           label: "颜色",
           type: "colorPicker",
           default: "#000000"
+        },
+        {
+          id: "description",
+          label: "描述",
+          type: "input",
+          default: ""
         }
       ],
       dialogVisible,

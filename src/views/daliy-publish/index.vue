@@ -1,23 +1,40 @@
 <template>
   <div class="daliy-publish">
     <h2 class="title-wrap">发布题目</h2>
-    <el-form-renderer :content="postContent" ref="form" label-width="60px" class="publish-form" v-loading="readyLoading">
+    <el-form-renderer
+      :content="postContent"
+      ref="form"
+      label-width="80px"
+      class="publish-form"
+      v-loading="readyLoading"
+    >
       <div class="publish-content-mask" v-show="readyPublish"></div>
     </el-form-renderer>
     <el-form-renderer :content="[]">
       <el-form-item class="btn-wrap" v-if="!readyPublish">
-        <el-button type="primary" @click="handleReadyPublish" v-loading="readyLoading">预备发布</el-button>
+        <el-button
+          type="primary"
+          @click="handleReadyPublish"
+          v-loading="readyLoading"
+          >预备发布</el-button
+        >
       </el-form-item>
       <el-form-item v-show="eventList.length">
         <el-steps :active="activeIndex" simple>
-          <el-step v-for="item in eventList" :key="item.title" :title="item.title"></el-step>
+          <el-step
+            v-for="item in eventList"
+            :key="item.title"
+            :title="item.title"
+          ></el-step>
           <!-- <el-step title="步骤 1" icon="el-icon-edit"></el-step>
           <el-step title="步骤 2" icon="el-icon-upload"></el-step>
           <el-step title="步骤 3" icon="el-icon-picture"></el-step>-->
         </el-steps>
       </el-form-item>
       <el-form-item class="btn-wrap" v-if="readyPublish">
-        <el-button type="primary" :loading="loading" @click="runTask">发布</el-button>
+        <el-button type="primary" :loading="loading" @click="runTask"
+          >发布</el-button
+        >
       </el-form-item>
     </el-form-renderer>
   </div>
@@ -26,6 +43,7 @@
 <script>
 import { onMounted, value } from "vue-function-api";
 import mavonEditor from "mavon-editor";
+import { issue_link_prefix } from "@/common/const";
 
 import {
   getLabels,
@@ -42,7 +60,6 @@ import {
   createSummaryContent,
   createReadmeContent
 } from "@/common/utils";
-import { Promise } from "q";
 
 const getFileShaAndContent = path =>
   getGithubFile(path).then(({ sha, content }) => ({
@@ -55,10 +72,12 @@ const getLastQuestionNumber = () =>
   getIssueList({
     per_page: 1,
     page: 1
-  }).then(([data]) => ({
-    titleNumber: Number(data.title.match(/\d+/)[0]) + 1,
-    number: data.number
-  }));
+  }).then(([data]) => {
+    return {
+      titleNumber: data ? Number(data.title.match(/\d+/)[0]) + 1 : 1, // 题目题号
+      number: data ? data.number : 0 // issue 编号
+    };
+  });
 
 // 写汇总文件 为什么要返回 link ? 因为后续需要
 const writeSummaryFile = async ({ gitMessage, title, link, body }) => {
@@ -83,9 +102,9 @@ const writeSummaryFile = async ({ gitMessage, title, link, body }) => {
 
 // 写 readme 文件
 const writeReadmeFile = async ({ gitMessage, title, link, body }) => {
-  const summaryPath = "README.md";
+  const readmePath = "README.md";
 
-  const { content, sha } = await getFileShaAndContent(summaryPath);
+  const { content, sha } = await getFileShaAndContent(readmePath);
 
   const writeContent = createReadmeContent({
     title,
@@ -95,7 +114,7 @@ const writeReadmeFile = async ({ gitMessage, title, link, body }) => {
   });
   // return writeContent;
   await updateGithubFile({
-    path: summaryPath,
+    path: readmePath,
     sha,
     message: gitMessage,
     content: writeContent
@@ -144,6 +163,12 @@ const postFormData = [
         trigger: ["blur", "change"]
       }
     ]
+  },
+  {
+    id: "isNoticeDingDing",
+    type: "checkbox",
+    label: "通知钉钉",
+    default: true
   }
 ];
 
@@ -155,7 +180,7 @@ export default {
     const loading = value(false);
     const eventList = value([]);
     const readyPublish = value(false);
-    const readyLoading = value(false)
+    const readyLoading = value(false);
     const activeIndex = value(0);
     const {
       refs,
@@ -176,7 +201,8 @@ export default {
       refs.form.updateForm({
         labels: [],
         body: "",
-        title: ""
+        title: "",
+        isNoticeDingDing: true
       });
       eventList.value = [];
       activeIndex.value = 0;
@@ -223,8 +249,7 @@ export default {
           const title = `第 ${titleNumber} 题: ${data.title}`;
           const toDayTitle = `今日题目 ${data.title}`;
           const gitMessage = `feat: ${title}`;
-          const link = `https://github.com/spaasteam/spaas-daily-practice/issues/${number +
-            1}`;
+          const link = `${issue_link_prefix}/${number + 1}`;
 
           const params = {
             ...data,
@@ -237,8 +262,6 @@ export default {
             body: data.body,
             link: `[做题连接](${link})`
           };
-
-          // const { html_url } = await postDaliy2Issue(params);
 
           eventList.value.push({
             cb: () => postDaliy2Issue(params),
@@ -262,27 +285,25 @@ export default {
             title: "发布题目到 summary 文件"
           });
 
-          // 推送钉钉
-          eventList.value.push({
-            cb: () =>
-              postMessage2Group({
-                title: toDayTitle,
-                text: questionData.link
-              }),
-            success: false,
-            title: "通知 钉钉 群聊"
-          });
+          // 如果开启推送钉钉，则推送
+          data.isNoticeDingDing &&
+            eventList.value.push({
+              cb: () =>
+                postMessage2Group({
+                  title: title,
+                  text: questionData.link
+                }),
+              success: false,
+              title: "通知 钉钉 群聊"
+            });
 
           toast("预备工作完成，请点击发布题目");
-          // resetForm();
           readyPublish.value = true;
         } catch (error) {
           console.log(error);
         } finally {
           readyLoading.value = false;
         }
-
-        // console.log(data);
       });
     };
 

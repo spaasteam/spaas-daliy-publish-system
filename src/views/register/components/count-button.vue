@@ -33,16 +33,16 @@ export default {
           clearInterval(timer);
         }
       }, 1000);
-    }
+    };
 
     onMounted(() => {
       handeClick();
-    })
+    });
 
     const showText = computed(() => {
       if (canClick.value) return props.text;
       return `${number.value} 秒后重试`;
-    })
+    });
 
     return {
       canClick,

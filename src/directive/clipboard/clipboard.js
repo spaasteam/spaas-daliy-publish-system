@@ -38,7 +38,7 @@ export default {
     } else {
       el._v_clipboard.text = function() {
         return binding.value;
-      }
+      };
       el._v_clipboard.action = function() {
         return binding.arg === "cut" ? "cut" : "copy";
       };

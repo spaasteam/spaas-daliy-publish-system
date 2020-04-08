@@ -1,19 +1,16 @@
 <template>
   <div>
-    <div v-for="m in menuList" :key="m.id" class="menu-item">
-      <el-menu-item :index="m.path" v-if="!m.children">
-        <!-- <icon-font :icon="m.icon"></icon-font> -->
+    <div v-for="m in menuList" :key="m.name" class="menu-item">
+      <el-menu-item :index="m.path" v-if="!m.children || !m.children.length">
+        <icon-font :icon="m.icon"></icon-font>
         <span slot="title" class="item-title">{{ m.name }}</span>
       </el-menu-item>
 
-      <el-submenu v-else :index="m.id + ''">
+      <el-submenu v-else :index="m.name + ''">
         <template slot="title">
-          <!--<i class="el-icon-menu"></i>-->
-          <!-- <img v-if="checkUrl(m.icon)" class="menu-item-img" :src="m.icon" alt="" />
-          <svg-icon v-else :icon-class="m.icon"></svg-icon> -->
+          <i class="el-icon-menu"></i>
           <span class="sub-menu-title">{{ m.name }}</span>
         </template>
-
         <menu-item :menuList="m.children"></menu-item>
       </el-submenu>
     </div>
@@ -31,7 +28,8 @@ export default {
   props: {
     menuList: {
       type: Array
-    }
+    },
+    isCollapse: Boolean
   },
   methods: {
     checkUrl(urlString) {
@@ -41,13 +39,4 @@ export default {
   }
 };
 </script>
-<style lang="less">
-.menu-item {
-  user-select: none;
-
-  .menu-item-img {
-    width: 16px;
-    margin-right: 3px;
-  }
-}
-</style>
+<style lang="less"></style>

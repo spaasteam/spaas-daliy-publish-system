@@ -1,29 +1,30 @@
-import { getUserInfo } from "@/services/v1/github";
+import github from "@/common/github-api";
 
 const state = {
   access_token: "",
   username: "admin",
-  avatar_url: ""
+  avatar_url: "",
+  gh: null
 };
 
 const actions = {
-  async login({ commit }, { username, access_token }) {
-    const data = await getUserInfo({ access_token });
-
-    if (data.login !== username) {
-      throw new Error("用户名错误");
-    }
+  async login({ commit }, { access_token }) {
+    const { data } = await github
+      .initGithubInstance(access_token)
+      .getUserInfo();
 
     localStorage.setItem("access_token", access_token);
 
     commit("update", {
       access_token,
-      username,
+      username: data.login,
       avatar_url: data.avatar_url
     });
   },
   async getUserInfoByToken({ commit }, access_token) {
-    const data = await getUserInfo({ access_token });
+    const { data } = await github
+      .initGithubInstance(access_token)
+      .getUserInfo();
 
     localStorage.setItem("access_token", access_token);
 
@@ -46,7 +47,7 @@ const mutations = {
   update(state, payload) {
     Object.entries(payload).forEach(([key, value]) => {
       state[key] = value;
-    })
+    });
   }
 };
 

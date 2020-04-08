@@ -25,7 +25,7 @@ Vue.mixin({
           const data = form.getFormValue();
 
           resolve(data);
-        })
+        });
       });
     }
   }
