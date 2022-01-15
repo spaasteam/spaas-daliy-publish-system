@@ -22,7 +22,7 @@
     "fe-markdown-toc": "^0.1.1",
     "lodash": "^4.17.15",
     "markdown-toc": "^1.2.0",
-    "marked": "^0.7.0",
+    "marked": "^4.0.10",
     "marked-toc": "^0.3.0",
     "mavon-editor": "^2.7.5",
     "netlify-lambda": "^1.6.3",
